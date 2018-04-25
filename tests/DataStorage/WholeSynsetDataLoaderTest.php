@@ -24,7 +24,7 @@ class WholeSynsetDataLoaderTest extends AbstractBaseTest
 	}
 
 	/**
-	 * @expectedException \AL\PhpWndb\DataStorage\Exceptions\UnknownSynsetOffsetException
+	 * @expectedException \AL\PhpWndb\Exceptions\UnknownSynsetOffsetException
 	 */
 	public function testGetSynsetDataUnknowSynsetOffset(): void
 	{

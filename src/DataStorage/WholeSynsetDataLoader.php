@@ -3,9 +3,9 @@ declare(strict_types = 1);
 
 namespace AL\PhpWndb\DataStorage;
 
-use AL\PhpWndb\DataStorage\Exceptions\UnknownSynsetOffsetException;
 use AL\PhpWndb\Exceptions\InvalidStateException;
 use AL\PhpWndb\Exceptions\IOException;
+use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 
 class WholeSynsetDataLoader implements SynsetDataLoaderInterface
 {

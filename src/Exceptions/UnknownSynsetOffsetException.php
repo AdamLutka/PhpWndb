@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace AL\PhpWndb\DataStorage\Exceptions;
+namespace AL\PhpWndb\Exceptions;
 
 class UnknownSynsetOffsetException extends \UnexpectedValueException
 {
