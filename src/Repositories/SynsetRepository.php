@@ -47,6 +47,6 @@ class SynsetRepository implements SynsetRepositoryInterface
 
 	public function dispose(SynsetInterface $synset): void
 	{
-		unset($synset->getSynsetOffset());
+		unset($this->synsets[$synset->getSynsetOffset()]);
 	}
 }
