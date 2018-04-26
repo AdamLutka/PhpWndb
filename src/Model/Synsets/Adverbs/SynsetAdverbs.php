@@ -5,6 +5,7 @@ namespace AL\PhpWndb\Model\Synsets\Adverbs;
 
 use AL\PhpWndb\Model\Synsets\SynsetAbstract;
 use AL\PhpWndb\Model\Words\AdverbInterface;
+use AL\PhpWndb\PartOfSpeechEnum;
 
 class SynsetAdverbs extends SynsetAbstract implements SynsetAdverbsInterface
 {
@@ -30,5 +31,10 @@ class SynsetAdverbs extends SynsetAbstract implements SynsetAdverbsInterface
 	public function getSynsetCategory(): SynsetAdverbsCategoryEnum
 	{
 		return $this->synsetCategory;
+	}
+
+	public function getPartOfSpeech(): PartOfSpeechEnum
+	{
+		return PartOfSpeechEnum::ADVERB();
 	}
 }

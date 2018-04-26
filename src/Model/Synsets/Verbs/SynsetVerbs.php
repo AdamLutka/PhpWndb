@@ -5,6 +5,7 @@ namespace AL\PhpWndb\Model\Synsets\Verbs;
 
 use AL\PhpWndb\Model\Synsets\SynsetAbstract;
 use AL\PhpWndb\Model\Words\VerbInterface;
+use AL\PhpWndb\PartOfSpeechEnum;
 
 class SynsetVerbs extends SynsetAbstract implements SynsetVerbsInterface
 {
@@ -30,5 +31,10 @@ class SynsetVerbs extends SynsetAbstract implements SynsetVerbsInterface
 	public function getSynsetCategory(): SynsetVerbsCategoryEnum
 	{
 		return $this->synsetCategory;
+	}
+
+	public function getPartOfSpeech(): PartOfSpeechEnum
+	{
+		return PartOfSpeechEnum::VERB();
 	}
 }

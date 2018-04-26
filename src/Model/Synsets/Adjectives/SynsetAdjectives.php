@@ -5,6 +5,7 @@ namespace AL\PhpWndb\Model\Synsets\Adjectives;
 
 use AL\PhpWndb\Model\Synsets\SynsetAbstract;
 use AL\PhpWndb\Model\Words\AdjectiveInterface;
+use AL\PhpWndb\PartOfSpeechEnum;
 
 class SynsetAdjectives extends SynsetAbstract implements SynsetAdjectivesInterface
 {
@@ -30,5 +31,10 @@ class SynsetAdjectives extends SynsetAbstract implements SynsetAdjectivesInterfa
 	public function getSynsetCategory(): SynsetAdjectivesCategoryEnum
 	{
 		return $this->synsetCategory;
+	}
+
+	public function getPartOfSpeech(): PartOfSpeechEnum
+	{
+		return PartOfSpeechEnum::ADJECTIVE();
 	}
 }

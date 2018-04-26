@@ -5,6 +5,7 @@ namespace AL\PhpWndb\Model\Synsets\Nouns;
 
 use AL\PhpWndb\Model\Synsets\SynsetAbstract;
 use AL\PhpWndb\Model\Words\NounInterface;
+use AL\PhpWndb\PartOfSpeechEnum;
 
 class SynsetNouns extends SynsetAbstract implements SynsetNounsInterface
 {
@@ -30,5 +31,10 @@ class SynsetNouns extends SynsetAbstract implements SynsetNounsInterface
 	public function getSynsetCategory(): SynsetNounsCategoryEnum
 	{
 		return $this->synsetCategory;
+	}
+
+	public function getPartOfSpeech(): PartOfSpeechEnum
+	{
+		return PartOfSpeechEnum::NOUN();
 	}
 }
