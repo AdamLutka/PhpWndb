@@ -25,7 +25,7 @@ class WordFactory implements WordFactoryInterface
 	/**
 	 * @param int[] $frames
 	 */
-	public function createVerb($lemma, $lexId, RelationsInterface $relations, iterable $frames): VerbInterface
+	public function createVerb(string $lemma, int $lexId, RelationsInterface $relations, iterable $frames): VerbInterface
 	{
 		return new Verb($lemma, $lexId, $relations, $frames);
 	}
