@@ -10,9 +10,9 @@ use AL\PhpWndb\Model\Synsets\Adjectives\SynsetAdjectivesCategoryEnum;
 use AL\PhpWndb\Model\Synsets\Adverbs\SynsetAdverbsCategoryEnum;
 use AL\PhpWndb\Model\Synsets\Nouns\SynsetNounsCategoryEnum;
 use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbsCategoryEnum;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class SynsetDataMapperTest extends AbstractBaseTest
+class SynsetDataMapperTest extends BaseTestAbstract
 {
 	/**
 	 * @dataProvider dpTestMapPartOfSpeech

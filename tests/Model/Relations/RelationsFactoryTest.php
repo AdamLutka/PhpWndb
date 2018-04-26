@@ -6,9 +6,9 @@ namespace AL\PhpWndb\Tests\Synsets\Relations;
 use AL\PhpWndb\Model\Relations\Relations;
 use AL\PhpWndb\Model\Relations\RelationPointerInterface;
 use AL\PhpWndb\Model\Relations\RelationsFactory;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class RelationsFactoryTest extends AbstractBaseTest
+class RelationsFactoryTest extends BaseTestAbstract
 {
 	public function testCreateRelation(): void
 	{

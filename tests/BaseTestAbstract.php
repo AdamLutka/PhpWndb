@@ -6,7 +6,7 @@ namespace AL\PhpWndb\Tests;
 use PHPUnit\Framework\TestCase;
 use AL\PhpEnum\Enum;
 
-abstract class AbstractBaseTest extends TestCase
+abstract class BaseTestAbstract extends TestCase
 {
 	public static function assertEnum(Enum $expectedEnum, $actualEnum, string $message = '')
 	{

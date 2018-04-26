@@ -7,9 +7,9 @@ use AL\PhpWndb\Model\Relations\Relations;
 use AL\PhpWndb\Model\Relations\RelationPointer;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
 use AL\PhpWndb\PartOfSpeechEnum;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class RelationsTest extends AbstractBaseTest
+class RelationsTest extends BaseTestAbstract
 {
 	/** @var Relations */
 	private $relations;

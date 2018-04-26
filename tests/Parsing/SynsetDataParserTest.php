@@ -8,9 +8,9 @@ use AL\PhpWndb\Parsing\ParsedData\ParsedPointerDataInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedSynsetDataInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedWordDataInterface;
 use AL\PhpWndb\Parsing\SynsetDataParser;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class SynsetDataParserTest extends AbstractBaseTest
+class SynsetDataParserTest extends BaseTestAbstract
 {
 	public function testParseSynsetDataNoun(): void
 	{

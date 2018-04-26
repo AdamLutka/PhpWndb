@@ -6,10 +6,10 @@ namespace AL\PhpWndb\Tests\Synsets\Relations;
 use AL\PhpWndb\Model\Relations\RelationPointerInterface;
 use AL\PhpWndb\Model\Relations\RelationPointerFactory;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 use AL\PhpWndb\PartOfSpeechEnum;
 
-class RelationPointerFactoryTest extends AbstractBaseTest
+class RelationPointerFactoryTest extends BaseTestAbstract
 {
 	public function testCreateRelationPointer(): void
 	{

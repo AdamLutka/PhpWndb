@@ -4,9 +4,9 @@ declare(strict_types = 1);
 namespace AL\PhpWndb\Tests\DataStorage;
 
 use AL\PhpWndb\DataStorage\WholeSynsetDataLoader;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class WholeSynsetDataLoaderTest extends AbstractBaseTest
+class WholeSynsetDataLoaderTest extends BaseTestAbstract
 {
 	public function testGetSynsetData(): void
 	{

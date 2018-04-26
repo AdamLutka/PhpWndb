@@ -16,10 +16,10 @@ use AL\PhpWndb\Model\Synsets\SynsetFactory;
 use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbsCategoryEnum;
 use AL\PhpWndb\Model\Words\WordFactory;
 use AL\PhpWndb\Model\Words\WordInterface;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 use AL\PhpWndb\Tests\Fixtures\Parsing\ParsedDataFixtures;
 
-class SynsetFactoryTest extends AbstractBaseTest
+class SynsetFactoryTest extends BaseTestAbstract
 {
 	/** @var ParsedDataFixtures */
 	protected $fixtures;

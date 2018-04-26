@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests\Synsets\Words;
 
 use AL\PhpWndb\Model\Relations\RelationsInterface;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 use AL\PhpWndb\Model\Words\Adjective;
 use AL\PhpWndb\Model\Words\Adverb;
 use AL\PhpWndb\Model\Words\Noun;
 use AL\PhpWndb\Model\Words\Verb;
 use AL\PhpWndb\Model\Words\WordFactory;
 
-class WordFactoryTest extends AbstractBaseTest
+class WordFactoryTest extends BaseTestAbstract
 {
 	public function testCreateAdjective(): void
 	{

@@ -8,9 +8,9 @@ use AL\PhpWndb\Model\Synsets\SynsetFactoryInterface;
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
 use AL\PhpWndb\Parsing\SynsetDataParserInterface;
 use AL\PhpWndb\Repositories\SynsetRepository;
-use AL\PhpWndb\Tests\AbstractBaseTest;
+use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class SynsetRepositoryTest extends AbstractBaseTest
+class SynsetRepositoryTest extends BaseTestAbstract
 {
 	public function testGetSynsetCacheSame(): void
 	{
