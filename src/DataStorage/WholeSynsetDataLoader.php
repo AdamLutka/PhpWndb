@@ -13,16 +13,16 @@ class WholeSynsetDataLoader implements SynsetDataLoaderInterface
 	const SYNSET_OFFSET_CHARS_COUNT = 8;
 
 
-	/** @var string */
-	private $dataFilepath;
+	/** @var FileReaderInterface */
+	private $reader;
 
 	/** @var string[] */
 	private $synsetData;
 
 
-	public function __construct(string $dataFilepath)
+	public function __construct(FileReaderInterface $reader)
 	{
-		$this->dataFilepath = $dataFilepath;
+		$this->reader = $reader;
 	}
 
 
@@ -47,15 +47,7 @@ class WholeSynsetDataLoader implements SynsetDataLoaderInterface
 	 */
 	private function loadSynsetData(): array
 	{
-		if (!is_readable($this->dataFilepath)) {
-			throw new IOException('File is not readable: ' . $this->dataFilepath);
-		}
-
-		$lines = file($this->dataFilepath, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
-		if ($lines === false) {
-			throw new IOException('File read failed: ' . $this->dataFilepath);
-		}
-
+		$lines = $this->reader->readAll();
 		return $this->transformSynsetData($lines);
 	}
 
