@@ -5,10 +5,10 @@ namespace AL\PhpWndb\Tests\DataStorage;
 
 use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\DataStorage\FileReaderInterface;
-use AL\PhpWndb\DataStorage\WholeWordsIndexLoader;
+use AL\PhpWndb\DataStorage\WholeWordIndexLoader;
 use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class WholeWordsIndexLoaderTest extends BaseTestAbstract
+class WholeWordIndexLoaderTest extends BaseTestAbstract
 {
 	public function testFindLemmaIndexData(): void
 	{
@@ -53,7 +53,7 @@ class WholeWordsIndexLoaderTest extends BaseTestAbstract
 	}
 
 
-	private function createLoader(array $data): WholeWordsIndexLoader
+	private function createLoader(array $data): WholeWordIndexLoader
 	{
 		$reader = $this->createMock(FileReaderInterface::class);
 		$reader->method('readAll')->willReturn($data);
@@ -63,6 +63,6 @@ class WholeWordsIndexLoaderTest extends BaseTestAbstract
 			return $lemma;
 		});
 
-		return new WholeWordsIndexLoader($reader, $mapper);
+		return new WholeWordIndexLoader($reader, $mapper);
 	}
 }

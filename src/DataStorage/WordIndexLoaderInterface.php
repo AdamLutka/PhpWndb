@@ -5,7 +5,7 @@ namespace AL\PhpWndb\DataStorage;
 
 use AL\PhpWndb\Exceptions\IOException;
 
-interface WordsIndexLoaderInterface
+interface WordIndexLoaderInterface
 {
 	/**
 	 * @throws IOException

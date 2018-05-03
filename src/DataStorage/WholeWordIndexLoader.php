@@ -7,7 +7,7 @@ use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\Exceptions\IOException;
 use AL\PhpWndb\Exceptions\InvalidStateException;
 
-class WholeWordsIndexLoader implements WordsIndexLoaderInterface
+class WholeWordIndexLoader implements WordIndexLoaderInterface
 {
 	/** @var FileReaderInterface */
 	protected $reader;
