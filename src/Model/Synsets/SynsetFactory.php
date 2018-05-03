@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Model\Synsets;
 
 use AL\PhpEnum\Enum;
-use AL\PhpWndb\DataMapping\SynsetDataMapperInterface;
+use AL\PhpWndb\DataMapping\PartOfSpeechMapperInterface;
+use AL\PhpWndb\DataMapping\RelationPointerTypeMapperInterface;
+use AL\PhpWndb\DataMapping\SynsetCategoryMapperInterface;
 use AL\PhpWndb\Model\Exceptions\SynsetCreateException;
 use AL\PhpWndb\Model\Relations\RelationPointerFactoryInterface;
 use AL\PhpWndb\Model\Relations\RelationsFactoryInterface;
@@ -26,26 +28,36 @@ use OutOfRangeException;
 
 class SynsetFactory implements SynsetFactoryInterface
 {
-	/** @var SynsetDataMapperInterface */
-	private $synsetDataMapper;
+	/** @var SynsetCategoryMapperInterface */
+	protected $synsetCategoryMapper;
+
+	/** @var PartOfSpeechMapperInterface */
+	protected $partOfSpeechMapper;
+
+	/** @var RelationPointerTypeMapperInterface */
+	protected $relationPointerTypeMapper;
 
 	/** @var RelationsFactoryInterface */
-	private $relationsFactory;
+	protected $relationsFactory;
 
 	/** @var RelationPointerFactoryInterface */
-	private $relationPointerFactory;
+	protected $relationPointerFactory;
 
 	/** @var WordFactoryInterface */
-	private $wordFactory;
+	protected $wordFactory;
 
 
 	public function __construct(
-		SynsetDataMapperInterface $synsetDataMapper,
+		SynsetCategoryMapperInterface $synsetCategoryMapper,
+		PartOfSpeechMapperInterface $partOfSpeechMapper,
+		RelationPointerTypeMapperInterface $relationPointerTypeMapper,
 		RelationsFactoryInterface $relationsFactory,
 		RelationPointerFactoryInterface $relationPointerFactory,
 		WordFactoryInterface $wordFactory
 	) {
-		$this->synsetDataMapper = $synsetDataMapper;
+		$this->synsetCategoryMapper = $synsetCategoryMapper;
+		$this->partOfSpeechMapper = $partOfSpeechMapper;
+		$this->relationPointerTypeMapper = $relationPointerTypeMapper;
 		$this->relationsFactory = $relationsFactory;
 		$this->relationPointerFactory = $relationPointerFactory;
 		$this->wordFactory = $wordFactory;
@@ -59,7 +71,7 @@ class SynsetFactory implements SynsetFactoryInterface
 			$synsetOffset = $parsedSynsetData->getSynsetOffset();
 			$gloss = $parsedSynsetData->getGloss();
 
-			$partOfSpeech = $this->synsetDataMapper->mapPartOfSpeech($parsedSynsetData->getPartOfSpeech());
+			$partOfSpeech = $this->partOfSpeechMapper->tokenToPartOfSpeech($parsedSynsetData->getPartOfSpeech());
 			$synsetCategory = $this->mapSynsetCategory($partOfSpeech, $parsedSynsetData->getLexFileNumber());
 			
 			$pointers = $this->createPointers($partOfSpeech, $parsedSynsetData->getPointers(), count($wordsData));
@@ -94,10 +106,10 @@ class SynsetFactory implements SynsetFactoryInterface
 	protected function mapSynsetCategory(PartOfSpeechEnum $partOfSpeech, int $synsetCategoryData): Enum
 	{
 		switch ($partOfSpeech) {
-			case PartOfSpeechEnum::ADJECTIVE(): return $this->synsetDataMapper->mapSynsetAdjectivesCategory($synsetCategoryData);
-			case PartOfSpeechEnum::ADVERB():    return $this->synsetDataMapper->mapSynsetAdverbsCategory($synsetCategoryData);
-			case PartOfSpeechEnum::NOUN():      return $this->synsetDataMapper->mapSynsetNounsCategory($synsetCategoryData);
-			case PartOfSpeechEnum::VERB():      return $this->synsetDataMapper->mapSynsetVerbsCategory($synsetCategoryData);
+			case PartOfSpeechEnum::ADJECTIVE(): return $this->synsetCategoryMapper->mapSynsetAdjectivesCategory($synsetCategoryData);
+			case PartOfSpeechEnum::ADVERB():    return $this->synsetCategoryMapper->mapSynsetAdverbsCategory($synsetCategoryData);
+			case PartOfSpeechEnum::NOUN():      return $this->synsetCategoryMapper->mapSynsetNounsCategory($synsetCategoryData);
+			case PartOfSpeechEnum::VERB():      return $this->synsetCategoryMapper->mapSynsetVerbsCategory($synsetCategoryData);
 			default: throw new UnexpectedValueException("Unexpected part of speech: $partOfSpeech");
 		}
 	}
@@ -109,8 +121,8 @@ class SynsetFactory implements SynsetFactoryInterface
 	{
 		$pointers = new ArraysHolder($wordsCount);
 		foreach ($pointersData as $pointerData) {
-			$pointerType = $this->synsetDataMapper->mapRelationPointerType($pointerData->getPointerType(), $sourcePartOfSpeech);
-			$targetPartOfSpeech = $this->synsetDataMapper->mapPartOfSpeech($pointerData->getPartOfSpeech());
+			$pointerType = $this->relationPointerTypeMapper->tokenToRelationPointerType($pointerData->getPointerType(), $sourcePartOfSpeech);
+			$targetPartOfSpeech = $this->partOfSpeechMapper->tokenToPartOfSpeech($pointerData->getPartOfSpeech());
 
 			$pointer = $this->relationPointerFactory->createRelationPointer(
 				$pointerType,

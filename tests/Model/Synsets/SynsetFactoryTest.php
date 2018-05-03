@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests\Model\Synsets;
 
 use AL\PhpEnum\Enum;
-use AL\PhpWndb\DataMapping\SynsetDataMapper;
+use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
+use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
+use AL\PhpWndb\DataMapping\SynsetCategoryMapper;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Model\Relations\RelationPointerFactory;
 use AL\PhpWndb\Model\Relations\RelationPointerInterface;
@@ -121,7 +123,9 @@ class SynsetFactoryTest extends BaseTestAbstract
 	protected function createFactory(): SynsetFactory
 	{
 		return new SynsetFactory(
-			new SynsetDataMapper(),
+			new SynsetCategoryMapper(),
+			new PartOfSpeechMapper(),
+			new RelationPointerTypeMapper(),
 			new RelationsFactory(),
 			new RelationPointerFactory(),
 			new WordFactory()
