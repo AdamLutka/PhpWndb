@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace AL\PhpWndb\Parsing;
 
+use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\Parsing\Exceptions\SynsetDataParseException;
 use AL\PhpWndb\Parsing\ParsedData\ParsedFrameData;
 use AL\PhpWndb\Parsing\ParsedData\ParsedPointerData;
@@ -13,11 +14,20 @@ use InvalidArgumentException;
 
 class SynsetDataParser implements SynsetDataParserInterface
 {
+	/** @var LemmaMapperInterface */
+	protected $lemmaMapper;
+
 	/** @var ParsedSynsetData */
 	protected $parsedData;
 
 	/** @var string[] */
 	protected $tokens = [];
+
+
+	public function __construct(LemmaMapperInterface $lemmaMapper)
+	{
+		$this->lemmaMapper = $lemmaMapper;
+	}
 
 
 	public function parseSynsetData(string $synsetData): ParsedSynsetDataInterface
@@ -137,9 +147,9 @@ class SynsetDataParser implements SynsetDataParserInterface
 	}
 
 
-	protected function transformWord(string $word): string
+	protected function transformWord(string $wordToken): string
 	{
-		return str_replace('_', ' ', $word);
+		return $this->lemmaMapper->tokenToLemma($wordToken);
 	}
 
 	/**

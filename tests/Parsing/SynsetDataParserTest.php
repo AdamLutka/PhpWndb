@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Tests\Parsing;
 
+use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedFrameDataInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedPointerDataInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedSynsetDataInterface;
@@ -15,7 +16,7 @@ class SynsetDataParserTest extends BaseTestAbstract
 	public function testParseSynsetDataNoun(): void
 	{
 		$synsetData = '00098064 04 n 01 invocation 1 002 @ 00044888 n 0000 + 00757492 v 0102 | the act of appealing for help';
-		$parser = new SynsetDataParser();
+		$parser = $this->createParser();
 		$parseResult = $parser->parseSynsetData($synsetData);
 
 		static::assertSynset(98064, 4, 'n', 'the act of appealing for help', 1, 2, 0, $parseResult);
@@ -31,14 +32,14 @@ class SynsetDataParserTest extends BaseTestAbstract
 	public function testParseSynsetDataVerb(): void
 	{
 		$synsetData = '00306627 30 v 02 implode 0 go_off 2 004 @ 01993067 v 0000 + 07380124 n 0101 + 07131012 n 0101 ! 00306798 v 0101 02 + 01 00 + 08 01 | burst inward; "The bottle imploded"  ';
-		$parser = new SynsetDataParser();
+		$parser = $this->createParser();
 		$parseResult = $parser->parseSynsetData($synsetData);
 
 		static::assertSynset(306627, 30, 'v', 'burst inward; "The bottle imploded"', 2, 4, 2, $parseResult);
 
 		$words = $parseResult->getWords();
 		static::assertWord('implode', 0, $words[0]);
-		static::assertWord('go off',  2, $words[1]);
+		static::assertWord('go_off',  2, $words[1]);
 
 		$pointers = $parseResult->getPointers();
 		static::assertPointer('@', 1993067, 'v', 0, 0, $pointers[0]);
@@ -58,7 +59,7 @@ class SynsetDataParserTest extends BaseTestAbstract
 	 */
 	public function testParseSynsetDataInvalid(string $synsetData): void
 	{
-		$parser = new SynsetDataParser();
+		$parser = $this->createParser();
 		$parser->parseSynsetData($synsetData);
 	}
 
@@ -88,6 +89,16 @@ class SynsetDataParserTest extends BaseTestAbstract
 		];
 	}
 
+
+	private function createParser(): SynsetDataParser
+	{
+		$mapper = $this->createMock(LemmaMapperInterface::class);
+		$mapper->method('tokenToLemma')->willReturnCallback(function ($token) {
+			return $token;
+		});
+
+		return new SynsetDataParser($mapper);
+	}
 
 	private static function assertSynset(
 		int $expectedSynsetOffset,
