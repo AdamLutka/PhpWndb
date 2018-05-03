@@ -16,8 +16,8 @@ class SynsetDataParser implements SynsetDataParserInterface
 	/** @var ParsedSynsetData */
 	protected $parsedData;
 
-	/** @var string[] */
-	protected $tokens = [];
+	/** @var TokensQueue */
+	protected $tokensQueue;
 
 
 	public function parseSynsetData(string $synsetData): ParsedSynsetDataInterface
@@ -48,7 +48,8 @@ class SynsetDataParser implements SynsetDataParserInterface
 			throw new InvalidArgumentException('Gloss is missing.');
 		}
 
-		$this->tokens = explode(' ', trim($data));
+		$tokens = explode(' ', trim($data));
+		$this->tokensQueue = new TokensQueue($tokens);
 		$this->parsedData = new ParsedSynsetData();
 		$this->parsedData->setGloss(trim($gloss));
 	}
@@ -58,9 +59,9 @@ class SynsetDataParser implements SynsetDataParserInterface
 	 */
 	protected function parseProperties(): void
 	{
-		$this->parsedData->setSynsetOffset($this->transformDecInt($this->takeOutToken()));
-		$this->parsedData->setLexFileNumber($this->transformDecInt($this->takeOutToken()));
-		$this->parsedData->setPartOfSpeech($this->takeOutToken());
+		$this->parsedData->setSynsetOffset($this->tokensQueue->takeOutDecInt());
+		$this->parsedData->setLexFileNumber($this->tokensQueue->takeOutDecInt());
+		$this->parsedData->setPartOfSpeech($this->tokensQueue->takeOutString());
 	}
 
 	/**
@@ -68,12 +69,12 @@ class SynsetDataParser implements SynsetDataParserInterface
 	 */
 	protected function parseWords(): void
 	{
-		$wordsCount = $this->transformHexInt($this->takeOutToken());
+		$wordsCount = $this->tokensQueue->takeOutHexInt();
 
 		for ($i = 0; $i < $wordsCount; ++$i) {
 			$word = new ParsedWordData();
-			$word->setValue($this->takeOutToken());
-			$word->setLexId($this->transformHexInt($this->takeOutToken()));
+			$word->setValue($this->tokensQueue->takeOutString());
+			$word->setLexId($this->tokensQueue->takeOutHexInt());
 
 			$this->parsedData->addWord($word);
 		}
@@ -84,15 +85,15 @@ class SynsetDataParser implements SynsetDataParserInterface
 	 */
 	protected function parsePointers(): void
 	{
-		$pointersCount = $this->transformDecInt($this->takeOutToken());
+		$pointersCount = $this->tokensQueue->takeOutDecInt();
 		
 		for ($i = 0; $i < $pointersCount; ++$i) {
 			$pointer = new ParsedPointerData();
-			$pointer->setPointerType($this->takeOutToken());
-			$pointer->setSynsetOffset($this->transformDecInt($this->takeOutToken()));
-			$pointer->setPartOfSpeech($this->takeOutToken());
+			$pointer->setPointerType($this->tokensQueue->takeOutString());
+			$pointer->setSynsetOffset($this->tokensQueue->takeOutDecInt());
+			$pointer->setPartOfSpeech($this->tokensQueue->takeOutString());
 
-			list($sourceIndex, $targetIndex) = $this->transformWordIndexes($this->takeOutToken());
+			list($sourceIndex, $targetIndex) = $this->tokensQueue->takeOutHexIntPair();
 
 			$pointer->setSourceWordIndex($sourceIndex);
 			$pointer->setTargetWordIndex($targetIndex);
@@ -110,17 +111,17 @@ class SynsetDataParser implements SynsetDataParserInterface
 			return;
 		}
 
-		$framesCount = $this->transformDecInt($this->takeOutToken());
+		$framesCount = $this->tokensQueue->takeOutDecInt();
 
 		for ($i = 0; $i < $framesCount; ++$i) {
-			$token = $this->takeOutToken();
+			$token = $this->tokensQueue->takeOutString();
 			if ($token !== '+') {
 				throw new InvalidArgumentException("Invalid token (+ expected): $token");
 			}
 
 			$frame = new ParsedFrameData();
-			$frame->setFrameNumber($this->transformDecInt($this->takeOutToken()));
-			$frame->setWordIndex($this->transformHexInt($this->takeOutToken()));
+			$frame->setFrameNumber($this->tokensQueue->takeOutDecInt());
+			$frame->setWordIndex($this->tokensQueue->takeOutHexInt());
 
 			$this->parsedData->addFrame($frame);
 		}
@@ -131,62 +132,8 @@ class SynsetDataParser implements SynsetDataParserInterface
 	 */
 	protected function checkParseSuccess(): void
 	{
-		if (!empty($this->tokens)) {
-			throw new InvalidArgumentException('There are unexpected tokens: ' . implode(' ', $this->tokens));
+		if ($this->tokensQueue->getCount() > 0) {
+			throw new InvalidArgumentException('There are unexpected tokens: ' . implode(' ', $this->tokensQueue->toArray()));
 		}
-	}
-
-
-	/**
-	 * @return int[]
-	 * @throws InvalidArgumentException
-	 */
-	protected function transformWordIndexes(string $wordIndexes): array
-	{
-		if (strlen($wordIndexes) !== 4) {
-			throw new InvalidArgumentException("Invalid pointer source/target: $wordIndexes");
-		}
-
-		return [
-			$this->transformHexInt(substr($wordIndexes, 0, 2)),
-			$this->transformHexInt(substr($wordIndexes, 2, 2)),
-		];
-	}
-
-	/**
-	 * @throws InvalidArgumentException
-	 */
-	protected function transformDecInt(string $number): int
-	{
-		if (!ctype_digit($number)) {
-			throw new InvalidArgumentException("Decimal integer expected: $number");
-		}
-
-		return (int)$number;
-	}
-
-	/**
-	 * @throws InvalidArgumentException
-	 */
-	protected function transformHexInt(string $number): int
-	{
-		if (!ctype_xdigit($number)) {
-			throw new InvalidArgumentException("Decimal integer expected: $number");
-		}
-
-		return hexdec($number);
-	}
-
-
-	/**
-	 * @throws InvalidArgumentException
-	 */
-	protected function takeOutToken(): string
-	{
-		if (empty($this->tokens)) {
-			throw new InvalidArgumentException('No tokens left.');
-		}
-
-		return array_shift($this->tokens);
 	}
 }
