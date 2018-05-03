@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests\Model\Synsets;
 
 use AL\PhpEnum\Enum;
+use AL\PhpWndb\DataMapping\LemmaMapper;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapper;
@@ -37,9 +38,9 @@ class SynsetFactoryTest extends BaseTestAbstract
 	public function testCreateSynsetFromParsedData(): void
 	{
 		$wordsData = [
-			$this->fixtures->createWordData('word1', 1),
-			$this->fixtures->createWordData('word2', 2),
-			$this->fixtures->createWordData('word3', 3),
+			$this->fixtures->createWordData('word_1', 1),
+			$this->fixtures->createWordData('word_2', 2),
+			$this->fixtures->createWordData('word_3', 3),
 		];
 		$pointersData = [
 			$this->fixtures->createPointerData('@', 11, 'v', 1, 2),
@@ -59,9 +60,9 @@ class SynsetFactoryTest extends BaseTestAbstract
 		static::assertSynset(135, 'gloss', SynsetVerbsCategoryEnum::WEATHER(), 3, $synset);
 
 		$words = $synset->getWords();
-		static::assertWord('word1', 1, 3, $words[0]);
-		static::assertWord('word2', 2, 1, $words[1]);
-		static::assertWord('word3', 3, 1, $words[2]);
+		static::assertWord('word 1', 1, 3, $words[0]);
+		static::assertWord('word 2', 2, 1, $words[1]);
+		static::assertWord('word 3', 3, 1, $words[2]);
 		
 		static::assertSame([33], $words[0]->getFrames());
 		static::assertSame([33, 1, 2], $words[1]->getFrames());
@@ -126,6 +127,7 @@ class SynsetFactoryTest extends BaseTestAbstract
 			new SynsetCategoryMapper(),
 			new PartOfSpeechMapper(),
 			new RelationPointerTypeMapper(),
+			new LemmaMapper(),
 			new RelationsFactory(),
 			new RelationPointerFactory(),
 			new WordFactory()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Model\Synsets;
 
 use AL\PhpEnum\Enum;
+use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapperInterface;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapperInterface;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapperInterface;
@@ -37,6 +38,9 @@ class SynsetFactory implements SynsetFactoryInterface
 	/** @var RelationPointerTypeMapperInterface */
 	protected $relationPointerTypeMapper;
 
+	/** @var LemmaMapperInterface */
+	protected $lemmaMapper;
+
 	/** @var RelationsFactoryInterface */
 	protected $relationsFactory;
 
@@ -51,6 +55,7 @@ class SynsetFactory implements SynsetFactoryInterface
 		SynsetCategoryMapperInterface $synsetCategoryMapper,
 		PartOfSpeechMapperInterface $partOfSpeechMapper,
 		RelationPointerTypeMapperInterface $relationPointerTypeMapper,
+		LemmaMapperInterface $lemmaMapper,
 		RelationsFactoryInterface $relationsFactory,
 		RelationPointerFactoryInterface $relationPointerFactory,
 		WordFactoryInterface $wordFactory
@@ -58,6 +63,7 @@ class SynsetFactory implements SynsetFactoryInterface
 		$this->synsetCategoryMapper = $synsetCategoryMapper;
 		$this->partOfSpeechMapper = $partOfSpeechMapper;
 		$this->relationPointerTypeMapper = $relationPointerTypeMapper;
+		$this->lemmaMapper = $lemmaMapper;
 		$this->relationsFactory = $relationsFactory;
 		$this->relationPointerFactory = $relationPointerFactory;
 		$this->wordFactory = $wordFactory;
@@ -178,11 +184,13 @@ class SynsetFactory implements SynsetFactoryInterface
 	 */
 	protected function createWord(PartOfSpeechEnum $partOfSpeech, ParsedWordDataInterface $wordData, RelationsInterface $relations, array $frames): WordInterface
 	{
+		$lemma = $this->lemmaMapper->tokenToLemma($wordData->getValue());
+
 		switch ($partOfSpeech) {
-			case PartOfSpeechEnum::ADJECTIVE(): return $this->wordFactory->createAdjective($wordData->getValue(), $wordData->getLexId(), $relations);
-			case PartOfSpeechEnum::ADVERB():    return $this->wordFactory->createAdverb($wordData->getValue(), $wordData->getLexId(), $relations);
-			case PartOfSpeechEnum::NOUN():      return $this->wordFactory->createNoun($wordData->getValue(), $wordData->getLexId(), $relations);
-			case PartOfSpeechEnum::VERB():      return $this->wordFactory->createVerb($wordData->getValue(), $wordData->getLexId(), $relations, $frames);
+			case PartOfSpeechEnum::ADJECTIVE(): return $this->wordFactory->createAdjective($lemma, $wordData->getLexId(), $relations);
+			case PartOfSpeechEnum::ADVERB():    return $this->wordFactory->createAdverb($lemma, $wordData->getLexId(), $relations);
+			case PartOfSpeechEnum::NOUN():      return $this->wordFactory->createNoun($lemma, $wordData->getLexId(), $relations);
+			case PartOfSpeechEnum::VERB():      return $this->wordFactory->createVerb($lemma, $wordData->getLexId(), $relations, $frames);
 			default: throw new InvalidArgumentException("Unknown part of speech: $partOfSpeech");
 		}
 	}

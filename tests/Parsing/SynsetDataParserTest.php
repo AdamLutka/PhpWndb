@@ -92,12 +92,7 @@ class SynsetDataParserTest extends BaseTestAbstract
 
 	private function createParser(): SynsetDataParser
 	{
-		$mapper = $this->createMock(LemmaMapperInterface::class);
-		$mapper->method('tokenToLemma')->willReturnCallback(function ($token) {
-			return $token;
-		});
-
-		return new SynsetDataParser($mapper);
+		return new SynsetDataParser();
 	}
 
 	private static function assertSynset(
