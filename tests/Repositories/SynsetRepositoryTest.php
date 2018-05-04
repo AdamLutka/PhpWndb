@@ -49,7 +49,7 @@ class SynsetRepositoryTest extends BaseTestAbstract
 	protected function createRepository(?int $synsetOffset = null): SynsetRepository
 	{
 		$factory = $this->createMock(SynsetFactoryInterface::class);
-		$factory->method('createSynsetFromParseData')->willReturnCallback(function () use ($synsetOffset) {
+		$factory->method('createSynsetFromParsedData')->willReturnCallback(function () use ($synsetOffset) {
 			$synset = $this->createMock(SynsetInterface::class);
 			$synset->method('getSynsetOffset')->willReturn($synsetOffset);
 			return $synset;

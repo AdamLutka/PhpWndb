@@ -39,7 +39,7 @@ class SynsetRepository implements SynsetRepositoryInterface
 		if (!isset($this->synsets[$synsetOffset])) {
 			$synsetData = $this->dataLoader->getSynsetData($synsetOffset);
 			$parsedData = $this->parser->parseSynsetData($synsetData);
-			$this->synsets[$synsetOffset] = $this->factory->createSynsetFromParseData($parsedData);
+			$this->synsets[$synsetOffset] = $this->factory->createSynsetFromParsedData($parsedData);
 		}
 
 		return $this->synsets[$synsetOffset];

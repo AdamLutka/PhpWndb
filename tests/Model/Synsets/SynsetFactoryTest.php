@@ -55,7 +55,7 @@ class SynsetFactoryTest extends BaseTestAbstract
 		$synsetData = $this->fixtures->createSynsetData(135, 43, 'v', 'gloss', $wordsData, $pointersData, $framesData);
 
 		$factory = $this->createFactory();
-		$synset = $factory->createSynsetFromParseData($synsetData);
+		$synset = $factory->createSynsetFromParsedData($synsetData);
 
 		static::assertSynset(135, 'gloss', SynsetVerbsCategoryEnum::WEATHER(), 3, $synset);
 
@@ -85,7 +85,7 @@ class SynsetFactoryTest extends BaseTestAbstract
 		$synsetData = $this->fixtures->createSynsetData(1248, 22, 'n', 'nouns', [], [], []);
 
 		$factory = $this->createFactory();
-		$synset = $factory->createSynsetFromParseData($synsetData);
+		$synset = $factory->createSynsetFromParsedData($synsetData);
 
 		static::assertSynset(1248, 'nouns', SynsetNounsCategoryEnum::PROCESS(), 0, $synset);
 	}
@@ -102,7 +102,7 @@ class SynsetFactoryTest extends BaseTestAbstract
 		$synsetData = $this->fixtures->createSynsetData(135, 2, 'r', 'gloss', [], [], $framesData);
 
 		$factory = $this->createFactory();
-		$factory->createSynsetFromParseData($synsetData);
+		$factory->createSynsetFromParsedData($synsetData);
 	}
 
 	/**
@@ -117,7 +117,7 @@ class SynsetFactoryTest extends BaseTestAbstract
 		$synsetData = $this->fixtures->createSynsetData(135, 2, 'r', 'gloss', [], $pointersData, []);
 
 		$factory = $this->createFactory();
-		$factory->createSynsetFromParseData($synsetData);
+		$factory->createSynsetFromParsedData($synsetData);
 	}
 
 

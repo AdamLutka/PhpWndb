@@ -7,5 +7,5 @@ use AL\PhpWndb\Parsing\ParsedData\ParsedSynsetDataInterface;
 
 interface SynsetFactoryInterface
 {
-	public function createSynsetFromParseData(ParsedSynsetDataInterface $parsedSynsetData): SynsetInterface;
+	public function createSynsetFromParsedData(ParsedSynsetDataInterface $parsedSynsetData): SynsetInterface;
 }
