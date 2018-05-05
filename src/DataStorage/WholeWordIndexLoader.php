@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\DataStorage;
 
-use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\Exceptions\IOException;
 use AL\PhpWndb\Exceptions\InvalidStateException;
 
@@ -12,28 +11,23 @@ class WholeWordIndexLoader implements WordIndexLoaderInterface
 	/** @var FileReaderInterface */
 	protected $reader;
 
-	/** @var LemmaMapperInterface */
-	protected $lemmaMapper;
-
 	/** @var string[] */
 	protected $indexData;
 
 
-	public function __construct(FileReaderInterface $reader, LemmaMapperInterface $lemmaMapper)
+	public function __construct(FileReaderInterface $reader)
 	{
 		$this->reader = $reader;
-		$this->lemmaMapper = $lemmaMapper;
 	}
 
 
-	public function findLemmaIndexData(string $lemma): ?string
+	public function findLemmaIndexData(string $lemmaToken): ?string
 	{
 		if ($this->indexData === null) {
 			$this->indexData = $this->loadIndexData();
 		}
 
-		$token = $this->lemmaMapper->lemmaToToken($lemma);
-		return $this->indexData[$token] ?? null;
+		return $this->indexData[$lemmaToken] ?? null;
 	}
 
 

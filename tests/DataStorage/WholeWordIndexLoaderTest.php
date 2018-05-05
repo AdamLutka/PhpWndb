@@ -58,11 +58,6 @@ class WholeWordIndexLoaderTest extends BaseTestAbstract
 		$reader = $this->createMock(FileReaderInterface::class);
 		$reader->method('readAll')->willReturn($data);
 
-		$mapper = $this->createMock(LemmaMapperInterface::class);
-		$mapper->method('lemmaToToken')->willReturnCallback(function ($lemma) {
-			return $lemma;
-		});
-
-		return new WholeWordIndexLoader($reader, $mapper);
+		return new WholeWordIndexLoader($reader);
 	}
 }

@@ -10,6 +10,6 @@ interface WordIndexLoaderInterface
 	/**
 	 * @throws IOException
 	 */
-	public function findLemmaIndexData(string $lemma): ?string;
+	public function findLemmaIndexData(string $lemmaToken): ?string;
 }
 
