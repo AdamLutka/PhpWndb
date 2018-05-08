@@ -1,17 +1,17 @@
 {
-    "name": "adam-lutka/php-wndb",
-    "description": "PHP API for WordNet (https://wordnet.princeton.edu/)",
-    "type": "library",
-    "keywords": ["wordnet", "synset"],
-    "license": "MIT",
-	"minimum-stability": "dev",
-    "authors": [
-        {
-            "name": "Adam Lutka",
-            "email": "adam.lutka@gmail.com",
-            "role": "Developer"
-        }
-    ],
+	"name": "adam-lutka/php-wndb",
+	"description": "PHP API for WordNet (https://wordnet.princeton.edu/)",
+	"type": "library",
+	"keywords": ["wordnet", "synset"],
+	"license": "MIT",
+	"minimum-stability": "stable",
+	"authors": [
+		{
+			"name": "Adam Lutka",
+			"email": "adam.lutka@gmail.com",
+			"role": "Developer"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"AL\\PhpWndb\\": "src/"
@@ -22,16 +22,17 @@
 			"AL\\PhpWndb\\Tests\\": "tests/"
 		}
 	},
-    "require-dev": {
-        "phpunit/phpunit": "^7.1"
-    },
+	"require-dev": {
+		"phpunit/phpunit": "^7.1"
+	},
 	"repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/AdamLutka/PhpEnum"
-        }
+		{
+			"type": "vcs",
+			"url": "https://github.com/AdamLutka/PhpEnum"
+		}
 	],
-    "require": {
-        "AdamLutka/PhpEnum": "dev-master"
-    }
+	"require": {
+		"AdamLutka/PhpEnum": "^0.1",
+		"php-di/php-di": "^6.0"
+	}
 }
