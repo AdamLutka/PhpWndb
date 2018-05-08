@@ -26,18 +26,23 @@ class WholeSynsetDataLoader implements SynsetDataLoaderInterface
 	}
 
 
-	public function getSynsetData(int $synsetOffset): string
+	public function findSynsetData(int $synsetOffset): ?string
 	{
 		if ($this->synsetData === null) {
 			$this->synsetData = $this->loadSynsetData();
 		}
 
-		if (isset($this->synsetData[$synsetOffset])) {
-			return $this->synsetData[$synsetOffset];
-		}
-		else {
+		return $this->synsetData[$synsetOffset] ?? null;
+	}
+
+	public function getSynsetData(int $synsetOffset): string
+	{
+		$synset = $this->findSynsetData($synsetOffset);
+		if ($synset === null) {
 			throw new UnknownSynsetOffsetException($synsetOffset);
 		}
+
+		return $synset;
 	}
 
 

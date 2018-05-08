@@ -11,7 +11,7 @@ use AL\PhpWndb\Parsing\WordIndexParserInterface;
 use AL\PhpWndb\Repositories\WordIndexRepository;
 use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class WordINdexRepositoryTest extends BaseTestAbstract
+class WordIndexRepositoryTest extends BaseTestAbstract
 {
 	public function testFindWordIndexCacheSame(): void
 	{

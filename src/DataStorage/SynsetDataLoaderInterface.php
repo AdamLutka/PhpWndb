@@ -7,6 +7,8 @@ use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 
 interface SynsetDataLoaderInterface
 {
+	public function findSynsetData(int $synsetOffset): ?string;
+
 	/**
 	 * @throws UnknownSynsetOffsetException
 	 */

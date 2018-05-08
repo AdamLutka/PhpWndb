@@ -3,12 +3,21 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Repositories;
 
+use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
+use UnexpectedValueException;
 
-interface SynsetMultiRepositoryInterface
+interface SynsetMultiRepositoryInterface extends SynsetRepositoryInterface
 {
-	public function getSynsetByOffset(PartOfSpeechEnum $partOfSpeech, int $synsetOffset): SynsetInterface;
+	/**
+	 * @throws UnexpectedValueException
+	 */
+	public function findSynsetByPartOfSpeech(PartOfSpeechEnum $partOfSpeech, int $synsetOffset): ?SynsetInterface;
 
-	public function dispose(SynsetInterface $synset): void;
+	/**
+	 * @throws UnexpectedValueException
+	 * @throws UnknownSynsetOffsetException
+	 */
+	public function getSynsetByPartOfSpeech(PartOfSpeechEnum $partOfSpeech, int $synsetOffset): SynsetInterface;
 }

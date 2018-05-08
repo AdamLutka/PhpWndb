@@ -12,6 +12,40 @@ use AL\PhpWndb\Tests\BaseTestAbstract;
 
 class SynsetRepositoryTest extends BaseTestAbstract
 {
+	public function testFindSynsetCacheSame(): void
+	{
+		$repository = $this->createRepository();
+
+		$synsetOffset = 1000;
+		$synset1 = $repository->findSynset($synsetOffset);
+		$synset2 = $repository->findSynset($synsetOffset);
+
+		static::assertNotNull($synset1);
+		static::assertNotNull($synset2);
+		static::assertSame($synset1, $synset2);
+	}
+
+	public function testFindSynsetCacheDifferent(): void
+	{
+		$repository = $this->createRepository();
+
+		$synset1 = $repository->findSynset(100);
+		$synset2 = $repository->findSynset(101);
+
+		static::assertNotNull($synset1);
+		static::assertNotNull($synset2);
+		static::assertNotSame($synset1, $synset2);
+	}
+
+	public function testFindSynsetUnknown(): void
+	{
+		$repository = $this->createRepository();
+		$synset = $repository->findSynset(-100);
+
+		static::assertNull($synset);
+	}
+
+
 	public function testGetSynsetCacheSame(): void
 	{
 		$repository = $this->createRepository();
@@ -33,6 +67,16 @@ class SynsetRepositoryTest extends BaseTestAbstract
 		static::assertNotSame($synset1, $synset2);
 	}
 
+	/**
+	 * @expectedException \AL\PhpWndb\Exceptions\UnknownSynsetOffsetException
+	 */
+	public function testGetSynsetUnknown(): void
+	{
+		$repository = $this->createRepository();
+		$synset = $repository->getSynset(-100);
+	}
+
+
 	public function testDispose(): void
 	{
 		$synsetOffset = 1000;
@@ -46,17 +90,25 @@ class SynsetRepositoryTest extends BaseTestAbstract
 	}
 
 
-	protected function createRepository(?int $synsetOffset = null): SynsetRepository
+	protected function createRepository(): SynsetRepository
 	{
+		$synsetOffset = null;
+
+		$loader = $this->createMock(SynsetDataLoaderInterface::class);
+		$loader->method('findSynsetData')->willReturnCallback(function ($offset) use (&$synsetOffset){
+			$synsetOffset = $offset;
+			return $offset > 0 ? '...' : null;
+		});
+
 		$factory = $this->createMock(SynsetFactoryInterface::class);
-		$factory->method('createSynsetFromParsedData')->willReturnCallback(function () use ($synsetOffset) {
+		$factory->method('createSynsetFromParsedData')->willReturnCallback(function () use (&$synsetOffset) {
 			$synset = $this->createMock(SynsetInterface::class);
 			$synset->method('getSynsetOffset')->willReturn($synsetOffset);
 			return $synset;
 		});
 
 		return new SynsetRepository(
-			$this->createMock(SynsetDataLoaderInterface::class),
+			$loader,
 			$this->createMock(SynsetDataParserInterface::class),
 			$factory
 		);
