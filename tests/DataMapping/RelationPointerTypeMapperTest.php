@@ -51,6 +51,8 @@ class RelationPointerTypeMapperTest extends BaseTestAbstract
 			[RelationPointerTypeEnum::VERB_GROUP(),                      '$', PartOfSpeechEnum::NOUN()],
 			[RelationPointerTypeEnum::SIMILAR_TO(),                      '&', PartOfSpeechEnum::NOUN()],
 			[RelationPointerTypeEnum::PARTICIPLE_OF_VERB(),              '<', PartOfSpeechEnum::NOUN()],
+			[RelationPointerTypeEnum::DOMAIN_OF_SYNSET(),                ';', PartOfSpeechEnum::NOUN()],
+			[RelationPointerTypeEnum::MEMBER_OF_THIS_DOMAIN(),           '-', PartOfSpeechEnum::NOUN()],
 			[RelationPointerTypeEnum::DERIVED_FROM_ADJECTIVE(),         '\\', PartOfSpeechEnum::NOUN()],
 			[RelationPointerTypeEnum::PERTAINYM(),                      '\\', PartOfSpeechEnum::ADJECTIVE()],
 		];

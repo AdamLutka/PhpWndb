@@ -34,5 +34,8 @@ namespace AL\PhpWndb\Model\Relations;
  * @method static $this PERTAINYM()
  *
  * @method static $this DERIVED_FROM_ADJECTIVE()
+ *
+ * @method static $this DOMAIN_OF_SYNSET()
+ * @method static $this MEMBER_OF_THIS_DOMAIN()
  */
 class RelationPointerTypeEnum extends \AL\PhpEnum\Enum {}

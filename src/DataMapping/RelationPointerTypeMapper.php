@@ -37,6 +37,8 @@ class RelationPointerTypeMapper implements RelationPointerTypeMapperInterface
 			case  '$': return RelationPointerTypeEnum::VERB_GROUP();
 			case  '&': return RelationPointerTypeEnum::SIMILAR_TO();
 			case  '<': return RelationPointerTypeEnum::PARTICIPLE_OF_VERB();
+			case  ';': return RelationPointerTypeEnum::DOMAIN_OF_SYNSET();
+			case  '-': return RelationPointerTypeEnum::MEMBER_OF_THIS_DOMAIN();
 			case '\\':
 				return $sourcePartOfSpeech === PartOfSpeechEnum::ADJECTIVE()
 					? RelationPointerTypeEnum::PERTAINYM()
