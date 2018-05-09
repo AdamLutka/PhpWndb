@@ -35,6 +35,7 @@ use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
 use AL\PhpWndb\Repositories\WordIndexMultiRepository;
 use AL\PhpWndb\Repositories\WordIndexRepository;
 use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;
+use AL\PhpWndb\WordNet;
 
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
@@ -165,6 +166,7 @@ class DiContainerFactory
 			SynsetFactoryInterface::class => autowire(SynsetFactory::class),
 			WordIndexParserInterface::class => create(WordIndexParser::class),
 			WordIndexFactoryInterface::class => autowire(WordIndexFactory::class),
+			WordNet::class => autowire(WordNet::class),
 		];
 	}
 }
