@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use AL\PhpWndb\DiContainerFactory;
-use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
