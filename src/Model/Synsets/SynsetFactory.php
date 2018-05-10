@@ -78,13 +78,12 @@ class SynsetFactory implements SynsetFactoryInterface
 			$gloss = $parsedSynsetData->getGloss();
 
 			$partOfSpeech = $this->partOfSpeechMapper->tokenToPartOfSpeech($parsedSynsetData->getPartOfSpeech());
-			$synsetCategory = $this->mapSynsetCategory($partOfSpeech, $parsedSynsetData->getLexFileNumber());
 			
 			$pointers = $this->createPointers($partOfSpeech, $parsedSynsetData->getPointers(), count($wordsData));
 			$frames = $this->createFrames($partOfSpeech, $parsedSynsetData->getFrames(), count($wordsData));
 			$words = $this->createWords($partOfSpeech, $wordsData, $pointers, $frames);
 
-			return $this->createSynset($partOfSpeech, $synsetOffset, $gloss, $words, $synsetCategory);
+			return $this->createSynset($partOfSpeech, $synsetOffset, $gloss, $words, $parsedSynsetData->getLexFileNumber());
 		}
 		catch (\Throwable $e) {
 			throw new SynsetCreateException('Create synset failed: ' . $e->getMessage(), 0, $e);
@@ -95,28 +94,27 @@ class SynsetFactory implements SynsetFactoryInterface
 	/**
 	 * @throws UnexpectedValueException
 	 */
-	protected function createSynset(PartOfSpeechEnum $partOfSpeech, int $synsetOffset, string $gloss, array $words, Enum $synsetCategory): SynsetInterface
+	protected function createSynset(PartOfSpeechEnum $partOfSpeech, int $synsetOffset, string $gloss, array $words, int $synsetCategoryData): SynsetInterface
 	{
 		switch ($partOfSpeech) {
-			case PartOfSpeechEnum::ADJECTIVE(): return new SynsetAdjectives($synsetOffset, $gloss, $words, $synsetCategory);
-			case PartOfSpeechEnum::ADVERB():    return new SynsetAdverbs($synsetOffset, $gloss, $words, $synsetCategory);
-			case PartOfSpeechEnum::NOUN():      return new SynsetNouns($synsetOffset, $gloss, $words, $synsetCategory);
-			case PartOfSpeechEnum::VERB():      return new SynsetVerbs($synsetOffset, $gloss, $words, $synsetCategory);
-			default: throw new UnexpectedValueException("Unexpected part of speech: $partOfSpeech");
-		}
-	}
+			case PartOfSpeechEnum::ADJECTIVE():
+				$synsetCategory = $this->synsetCategoryMapper->mapSynsetAdjectivesCategory($synsetCategoryData);
+				return new SynsetAdjectives($synsetOffset, $gloss, $words, $synsetCategory);
 
-	/**
-	 * @throws UnexpectedValueException
-	 */
-	protected function mapSynsetCategory(PartOfSpeechEnum $partOfSpeech, int $synsetCategoryData): Enum
-	{
-		switch ($partOfSpeech) {
-			case PartOfSpeechEnum::ADJECTIVE(): return $this->synsetCategoryMapper->mapSynsetAdjectivesCategory($synsetCategoryData);
-			case PartOfSpeechEnum::ADVERB():    return $this->synsetCategoryMapper->mapSynsetAdverbsCategory($synsetCategoryData);
-			case PartOfSpeechEnum::NOUN():      return $this->synsetCategoryMapper->mapSynsetNounsCategory($synsetCategoryData);
-			case PartOfSpeechEnum::VERB():      return $this->synsetCategoryMapper->mapSynsetVerbsCategory($synsetCategoryData);
-			default: throw new UnexpectedValueException("Unexpected part of speech: $partOfSpeech");
+			case PartOfSpeechEnum::ADVERB():
+				$synsetCategory = $this->synsetCategoryMapper->mapSynsetAdverbsCategory($synsetCategoryData);
+				return new SynsetAdverbs($synsetOffset, $gloss, $words, $synsetCategory);
+
+			case PartOfSpeechEnum::NOUN():
+				$synsetCategory = $this->synsetCategoryMapper->mapSynsetNounsCategory($synsetCategoryData);
+				return new SynsetNouns($synsetOffset, $gloss, $words, $synsetCategory);
+
+			case PartOfSpeechEnum::VERB():
+				$synsetCategory = $this->synsetCategoryMapper->mapSynsetVerbsCategory($synsetCategoryData);
+				return new SynsetVerbs($synsetOffset, $gloss, $words, $synsetCategory);
+
+			default:
+				throw new UnexpectedValueException("Unexpected part of speech: $partOfSpeech");
 		}
 	}
 
