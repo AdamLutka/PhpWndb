@@ -37,27 +37,27 @@ abstract class WordAbstract implements WordInterface
 	}
 
 
-	public function getAllRelated(): iterable
+	public function getAllRelated(): array
 	{
 		return $this->relations->getAllRelationPointers();
 	}
 
-	public function getAntonyms(): iterable
+	public function getAntonyms(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::ANTONYM());
 	}
 
-	public function getDomainOfSynsetTopics(): iterable
+	public function getDomainOfSynsetTopics(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::DOMAIN_OF_SYNSET_TOPIC());
 	}
 
-	public function getDomainOfSynsetRegions(): iterable
+	public function getDomainOfSynsetRegions(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::DOMAIN_OF_SYNSET_REGION());
 	}
 
-	public function getDomainOfSynsetUsages(): iterable
+	public function getDomainOfSynsetUsages(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::DOMAIN_OF_SYNSET_USAGE());
 	}

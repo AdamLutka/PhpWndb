@@ -11,7 +11,7 @@ interface SynsetAdverbsInterface extends SynsetInterface
 	/**
 	 * @return AdverbInterface[]
 	 */
-	public function getAdverbs(): iterable;
+	public function getAdverbs(): array;
 
 	public function getSynsetCategory(): SynsetAdverbsCategoryEnum;
 }

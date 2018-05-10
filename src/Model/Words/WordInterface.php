@@ -15,25 +15,25 @@ interface WordInterface
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getAllRelated(): iterable;
+	public function getAllRelated(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getAntonyms(): iterable;
+	public function getAntonyms(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getDomainOfSynsetTopics(): iterable;
+	public function getDomainOfSynsetTopics(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getDomainOfSynsetRegions(): iterable;
+	public function getDomainOfSynsetRegions(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getDomainOfSynsetUsages(): iterable;
+	public function getDomainOfSynsetUsages(): array;
 }

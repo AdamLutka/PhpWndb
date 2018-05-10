@@ -95,7 +95,7 @@ class SynsetFactory implements SynsetFactoryInterface
 	/**
 	 * @throws UnexpectedValueException
 	 */
-	protected function createSynset(PartOfSpeechEnum $partOfSpeech, int $synsetOffset, string $gloss, iterable $words, Enum $synsetCategory): SynsetInterface
+	protected function createSynset(PartOfSpeechEnum $partOfSpeech, int $synsetOffset, string $gloss, array $words, Enum $synsetCategory): SynsetInterface
 	{
 		switch ($partOfSpeech) {
 			case PartOfSpeechEnum::ADJECTIVE(): return new SynsetAdjectives($synsetOffset, $gloss, $words, $synsetCategory);
@@ -123,7 +123,7 @@ class SynsetFactory implements SynsetFactoryInterface
 	/**
 	 * @param ParsedPointerDataInterface[] $pointersData
 	 */
-	protected function createPointers(PartOfSpeechEnum $sourcePartOfSpeech, iterable $pointersData, int $wordsCount): ArraysHolder
+	protected function createPointers(PartOfSpeechEnum $sourcePartOfSpeech, array $pointersData, int $wordsCount): ArraysHolder
 	{
 		$pointers = new ArraysHolder($wordsCount);
 		foreach ($pointersData as $pointerData) {
@@ -147,7 +147,7 @@ class SynsetFactory implements SynsetFactoryInterface
 	/**
 	 * @param ParsedFrameDataInterface[] $framesData
 	 */
-	protected function createFrames(PartOfSpeechEnum $sourcePartOfSpeech, iterable $framesData, int $wordsCount): ArraysHolder
+	protected function createFrames(PartOfSpeechEnum $sourcePartOfSpeech, array $framesData, int $wordsCount): ArraysHolder
 	{
 		if ($sourcePartOfSpeech !== PartOfSpeechEnum::VERB() && !empty($framesData)) {
 			throw new InvalidArgumentException("There should not be any frames for part of speech $sourcePartOfSpeech.");
@@ -168,7 +168,7 @@ class SynsetFactory implements SynsetFactoryInterface
 	 * @param ParsedWordDataInterface[] $wordsData
 	 * @return WordInterface[]
 	 */
-	protected function createWords(PartOfSpeechEnum $partOfSpeech, iterable $wordsData, ArraysHolder $pointers, ArraysHolder $frames): iterable
+	protected function createWords(PartOfSpeechEnum $partOfSpeech, array $wordsData, ArraysHolder $pointers, ArraysHolder $frames): array
 	{
 		$words = [];
 		foreach ($wordsData as $key => $wordData) {

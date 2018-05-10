@@ -11,7 +11,7 @@ interface SynsetNounsInterface extends SynsetInterface
 	/**
 	 * @return NounInterface[]
 	 */
-	public function getNouns(): iterable;
+	public function getNouns(): array;
 
 	public function getSynsetCategory(): SynsetNounsCategoryEnum;
 }

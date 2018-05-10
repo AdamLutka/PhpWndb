@@ -15,8 +15,8 @@ class ParsedIndexFixtures extends AbstractFixtures
 	public function createWordIndex(
 		string $lemma,
 		string $partOfSpeech,
-		iterable $relationPointerTypes,
-		iterable $synsetOffsets
+		array $relationPointerTypes,
+		array $synsetOffsets
 	): ParsedWordIndexInterface {
 		$wordIndex = $this->createMock(ParsedWordIndexInterface::class);
 		$wordIndex->method('getLemma')->willReturn($lemma);

@@ -11,7 +11,7 @@ interface SynsetVerbsInterface extends SynsetInterface
 	/**
 	 * @return VerbInterface[]
 	 */
-	public function getVerbs(): iterable;
+	public function getVerbs(): array;
 
 	public function getSynsetCategory(): SynsetVerbsCategoryEnum;
 }

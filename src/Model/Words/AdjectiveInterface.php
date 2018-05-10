@@ -10,25 +10,25 @@ interface AdjectiveInterface extends WordInterface
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getSimilarTo(): iterable;
+	public function getSimilarTo(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getParticipleOfVerbs(): iterable;
+	public function getParticipleOfVerbs(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getPertainyms(): iterable;
+	public function getPertainyms(): array;
 	
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getAttributes(): iterable;
+	public function getAttributes(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getAlsoSee(): iterable;
+	public function getAlsoSee(): array;
 }

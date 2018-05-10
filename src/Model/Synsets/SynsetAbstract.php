@@ -22,7 +22,7 @@ abstract class SynsetAbstract implements SynsetInterface
 	 * @param WordInterface[] $words
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct(int $synsetOffset, string $gloss, iterable $words)
+	public function __construct(int $synsetOffset, string $gloss, array $words)
 	{
 		$this->synsetOffset = $synsetOffset;
 		$this->gloss = $gloss;
@@ -40,7 +40,7 @@ abstract class SynsetAbstract implements SynsetInterface
 		return $this->gloss;
 	}
 
-	public function getWords(): iterable
+	public function getWords(): array
 	{
 		return $this->words;
 	}

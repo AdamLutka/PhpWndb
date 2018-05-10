@@ -16,14 +16,14 @@ class SynsetAdjectives extends SynsetAbstract implements SynsetAdjectivesInterfa
 	/**
 	 * @param AdjectiveInterface[] $words
 	 */
-	public function __construct(int $synsetOffset, string $gloss, iterable $words, SynsetAdjectivesCategoryEnum $synsetCategory)
+	public function __construct(int $synsetOffset, string $gloss, array $words, SynsetAdjectivesCategoryEnum $synsetCategory)
 	{
 		parent::__construct($synsetOffset, $gloss, $words);
 		$this->synsetCategory = $synsetCategory;
 	}
 
 
-	public function getAdjectives(): iterable
+	public function getAdjectives(): array
 	{
 		return $this->words;
 	}

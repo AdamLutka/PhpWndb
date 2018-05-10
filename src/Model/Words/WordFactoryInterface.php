@@ -36,6 +36,6 @@ interface WordFactoryInterface
 		string $lemma,
 		int $lexId,
 		RelationsInterface $relations,
-		iterable $frames
+		array $frames
 	): VerbInterface;
 }

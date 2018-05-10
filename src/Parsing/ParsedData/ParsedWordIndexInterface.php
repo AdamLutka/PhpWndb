@@ -12,10 +12,10 @@ interface ParsedWordIndexInterface
 	/**
 	 * @return string[]
 	 */
-	public function getPointerTypes(): iterable;
+	public function getPointerTypes(): array;
 
 	/**
 	 * @return int[]
 	 */
-	public function getSynsetOffsets(): iterable;
+	public function getSynsetOffsets(): array;
 }

@@ -26,7 +26,7 @@ class WordNet
 	/**
 	 * @return SynsetInterface[]
 	 */
-	public function searchLemma(string $lemma): iterable
+	public function searchLemma(string $lemma): array
 	{
 		$wordIndex = $this->wordIndexRepository->findWordIndex($lemma);
 		if ($wordIndex === null) {

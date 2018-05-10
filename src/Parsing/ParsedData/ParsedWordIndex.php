@@ -28,12 +28,12 @@ class ParsedWordIndex implements ParsedWordIndexInterface
 		return $this->partOfSpeech;
 	}
 
-	public function getPointerTypes(): iterable
+	public function getPointerTypes(): array
 	{
 		return $this->pointerTypes;
 	}
 
-	public function getSynsetOffsets(): iterable
+	public function getSynsetOffsets(): array
 	{
 		return $this->synsetOffsets;
 	}

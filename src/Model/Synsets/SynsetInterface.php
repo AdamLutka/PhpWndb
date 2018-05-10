@@ -15,7 +15,7 @@ interface SynsetInterface
 	/**
 	 * @return WordInterface[]
 	 */
-	public function getWords(): iterable;
+	public function getWords(): array;
 
 	public function getPartOfSpeech(): PartOfSpeechEnum;
 }

@@ -11,7 +11,7 @@ interface SynsetAdjectivesInterface extends SynsetInterface
 	/**
 	 * @return AdjectiveInterface[]
 	 */
-	public function getAdjectives(): iterable;
+	public function getAdjectives(): array;
 
 	public function getSynsetCategory(): SynsetAdjectivesCategoryEnum;
 }

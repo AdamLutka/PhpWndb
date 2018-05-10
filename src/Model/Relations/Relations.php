@@ -5,7 +5,7 @@ namespace AL\PhpWndb\Model\Relations;
 
 class Relations implements RelationsInterface
 {
-	/** @var RelationPointer[][]  */
+	/** @var RelationPointerInterface[][]  */
 	protected $pointers = [];
 
 
@@ -17,19 +17,19 @@ class Relations implements RelationsInterface
 	/**
 	 * @param RelationPointerInterface[] $pointers
 	 */
-	public function addRelationPointers(iterable $pointers): void
+	public function addRelationPointers(array $pointers): void
 	{
 		foreach ($pointers as $pointer) {
 			$this->addRelationPointer($pointer);
 		}
 	}
 
-	public function getRelationPointersOfType(RelationPointerTypeEnum $pointerType): iterable
+	public function getRelationPointersOfType(RelationPointerTypeEnum $pointerType): array
 	{
 		return $this->pointers[(string)$pointerType] ?? [];
 	}
 
-	public function getAllRelationPointers(): iterable
+	public function getAllRelationPointers(): array
 	{
 		return array_reduce($this->pointers, function ($carry, $item) {
 			return array_merge($carry, $item);

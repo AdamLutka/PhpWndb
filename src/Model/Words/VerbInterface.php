@@ -10,41 +10,41 @@ interface VerbInterface extends WordInterface
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getHypernyms(): iterable;
+	public function getHypernyms(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getHyponyms(): iterable;
+	public function getHyponyms(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getEntailments(): iterable;
+	public function getEntailments(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getCauses(): iterable;
+	public function getCauses(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getAlsoSee(): iterable;
+	public function getAlsoSee(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getVerbGroups(): iterable;
+	public function getVerbGroups(): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getDerivationallyRelatedForms(): iterable;
+	public function getDerivationallyRelatedForms(): array;
 
 
 	/**
 	 * @return int[]
 	 */
-	public function getFrames(): iterable;
+	public function getFrames(): array;
 }

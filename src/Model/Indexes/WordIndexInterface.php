@@ -15,10 +15,10 @@ interface WordIndexInterface
 	/**
 	 * @return RelationPointerTypeEnum[]
 	 */
-	public function getRelationPointerTypes(): iterable;
+	public function getRelationPointerTypes(): array;
 
 	/**
 	 * @return int[]
 	 */
-	public function getSynsetOffsets(): iterable;
+	public function getSynsetOffsets(): array;
 }

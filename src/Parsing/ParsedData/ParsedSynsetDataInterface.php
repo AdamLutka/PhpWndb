@@ -16,15 +16,15 @@ interface ParsedSynsetDataInterface
 	/**
 	 * @return ParsedWordDataInterface[]
 	 */
-	public function getWords(): iterable;
+	public function getWords(): array;
 
 	/**
 	 * @return ParsedPointerDataInterface[]
 	 */
-	public function getPointers(): iterable;
+	public function getPointers(): array;
 
 	/**
 	 * @return ParsedFrameDataInterface[]
 	 */
-	public function getFrames(): iterable;
+	public function getFrames(): array;
 }

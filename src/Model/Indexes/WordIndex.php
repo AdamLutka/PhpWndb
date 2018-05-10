@@ -25,7 +25,7 @@ class WordIndex implements WordIndexInterface
 	 * @param RelationPointerTypeEnum[] $relationPointerTypes
 	 * @param int[] $synsetOffsets
 	 */
-	public function __construct(string $lemma, PartOfSpeechEnum $partOfSpeech, iterable $relationPointerTypes, iterable $synsetOffsets)
+	public function __construct(string $lemma, PartOfSpeechEnum $partOfSpeech, array $relationPointerTypes, array $synsetOffsets)
 	{
 		$this->lemma = $lemma;
 		$this->partOfSpeech = $partOfSpeech;
@@ -44,12 +44,12 @@ class WordIndex implements WordIndexInterface
 		return $this->partOfSpeech;
 	}
 
-	public function getRelationPointerTypes(): iterable
+	public function getRelationPointerTypes(): array
 	{
 		return $this->relationPointerTypes;
 	}
 
-	public function getSynsetOffsets(): iterable
+	public function getSynsetOffsets(): array
 	{
 		return $this->synsetOffsets;
 	}

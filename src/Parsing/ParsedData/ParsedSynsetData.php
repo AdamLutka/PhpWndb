@@ -47,17 +47,17 @@ class ParsedSynsetData implements ParsedSynsetDataInterface
 		return $this->gloss;
 	}
 
-	public function getWords(): iterable
+	public function getWords(): array
 	{
 		return $this->words;
 	}
 
-	public function getPointers(): iterable
+	public function getPointers(): array
 	{
 		return $this->pointers;
 	}
 
-	public function getFrames(): iterable
+	public function getFrames(): array
 	{
 		return $this->frames;
 	}

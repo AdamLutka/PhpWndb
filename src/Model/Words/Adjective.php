@@ -7,27 +7,27 @@ use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
 
 class Adjective extends WordAbstract implements AdjectiveInterface
 {
-	public function getSimilarTo(): iterable
+	public function getSimilarTo(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::SIMILAR_TO());
 	}
 
-	public function getParticipleOfVerbs(): iterable
+	public function getParticipleOfVerbs(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::PARTICIPLE_OF_VERB());
 	}
 
-	public function getPertainyms(): iterable
+	public function getPertainyms(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::PERTAINYM());
 	}
 
-	public function getAttributes(): iterable
+	public function getAttributes(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::ATTRIBUTE());
 	}
 
-	public function getAlsoSee(): iterable
+	public function getAlsoSee(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::ALSO_SEE());
 	}

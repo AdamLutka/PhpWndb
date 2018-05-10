@@ -8,10 +8,10 @@ interface RelationsInterface
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getRelationPointersOfType(RelationPointerTypeEnum $pointerType): iterable;
+	public function getRelationPointersOfType(RelationPointerTypeEnum $pointerType): array;
 
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getAllRelationPointers(): iterable;
+	public function getAllRelationPointers(): array;
 }

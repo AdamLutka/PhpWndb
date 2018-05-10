@@ -56,9 +56,9 @@ class ParsedDataFixtures extends AbstractFixtures
 		int $lexFileNumber,
 		string $partOfSpeech,
 		string $gloss,
-		iterable $words,
-		iterable $pointers,
-		iterable $frames
+		array $words,
+		array $pointers,
+		array $frames
 	): ParsedSynsetDataInterface {
 		$mock = $this->createMock(ParsedSynsetDataInterface::class);
 		$mock->method('getSynsetOffset')->willReturn($synsetOffset);

@@ -16,14 +16,14 @@ class SynsetVerbs extends SynsetAbstract implements SynsetVerbsInterface
 	/**
 	 * @param VerbInterface[] $words
 	 */
-	public function __construct(int $synsetOffset, string $gloss, iterable $words, SynsetVerbsCategoryEnum $synsetCategory)
+	public function __construct(int $synsetOffset, string $gloss, array $words, SynsetVerbsCategoryEnum $synsetCategory)
 	{
 		parent::__construct($synsetOffset, $gloss, $words);
 		$this->synsetCategory = $synsetCategory;
 	}
 
 
-	public function getVerbs(): iterable
+	public function getVerbs(): array
 	{
 		return $this->words;
 	}

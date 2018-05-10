@@ -15,50 +15,50 @@ class Verb extends WordAbstract implements VerbInterface
 	/**
 	 * @param int[] $frames
 	 */
-	public function __construct(string $lemma, int $lexId, RelationsInterface $relations, iterable $frames)
+	public function __construct(string $lemma, int $lexId, RelationsInterface $relations, array $frames)
 	{
 		parent::__construct($lemma, $lexId, $relations);
 		$this->frames = $frames;
 	}
 
 
-	public function getHypernyms(): iterable
+	public function getHypernyms(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::HYPERNYM());
 	}
 
-	public function getHyponyms(): iterable
+	public function getHyponyms(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::HYPONYM());
 	}
 
-	public function getEntailments(): iterable
+	public function getEntailments(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::ENTAILMENT());
 	}
 
-	public function getCauses(): iterable
+	public function getCauses(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::CAUSE());
 	}
 
-	public function getAlsoSee(): iterable
+	public function getAlsoSee(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::ALSO_SEE());
 	}
 
-	public function getVerbGroups(): iterable
+	public function getVerbGroups(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::VERB_GROUP());
 	}
 
-	public function getDerivationallyRelatedForms(): iterable
+	public function getDerivationallyRelatedForms(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::DERIVATIONALLY_RELATED_FORM());
 	}
 
 
-	public function getFrames(): iterable
+	public function getFrames(): array
 	{
 		return $this->frames;
 	}

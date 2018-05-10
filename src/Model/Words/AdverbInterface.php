@@ -10,5 +10,5 @@ interface AdverbInterface extends WordInterface
 	/**
 	 * @return RelationPointerInterface[]
 	 */
-	public function getDerivedFromAdjectives(): iterable;
+	public function getDerivedFromAdjectives(): array;
 }

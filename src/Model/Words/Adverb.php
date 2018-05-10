@@ -7,7 +7,7 @@ use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
 
 class Adverb extends WordAbstract implements AdverbInterface
 {
-	public function getDerivedFromAdjectives(): iterable
+	public function getDerivedFromAdjectives(): array
 	{
 		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::DERIVED_FROM_ADJECTIVE());
 	}

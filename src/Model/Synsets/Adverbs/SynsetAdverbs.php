@@ -16,14 +16,14 @@ class SynsetAdverbs extends SynsetAbstract implements SynsetAdverbsInterface
 	/**
 	 * @param AdverbInterface[] $words
 	 */
-	public function __construct(int $synsetOffset, string $gloss, iterable $words, SynsetAdverbsCategoryEnum $synsetCategory)
+	public function __construct(int $synsetOffset, string $gloss, array $words, SynsetAdverbsCategoryEnum $synsetCategory)
 	{
 		parent::__construct($synsetOffset, $gloss, $words);
 		$this->synsetCategory = $synsetCategory;
 	}
 
 
-	public function getAdverbs(): iterable
+	public function getAdverbs(): array
 	{
 		return $this->words;
 	}

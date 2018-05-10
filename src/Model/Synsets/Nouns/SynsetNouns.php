@@ -16,14 +16,14 @@ class SynsetNouns extends SynsetAbstract implements SynsetNounsInterface
 	/**
 	 * @param NounInterface[] $words
 	 */
-	public function __construct(int $synsetOffset, string $gloss, iterable $words, SynsetNounsCategoryEnum $synsetCategory)
+	public function __construct(int $synsetOffset, string $gloss, array $words, SynsetNounsCategoryEnum $synsetCategory)
 	{
 		parent::__construct($synsetOffset, $gloss, $words);
 		$this->synsetCategory = $synsetCategory;
 	}
 
 
-	public function getNouns(): iterable
+	public function getNouns(): array
 	{
 		return $this->words;
 	}

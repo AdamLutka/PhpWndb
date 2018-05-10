@@ -8,5 +8,5 @@ interface RelationsFactoryInterface
 	/**
 	 * @param RelationPointerInterface[] $relationPointers
 	 */
-	public function createRelations(iterable $relationPointers): RelationsInterface;
+	public function createRelations(array $relationPointers): RelationsInterface;
 }
