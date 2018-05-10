@@ -49,7 +49,7 @@ class Verb extends WordAbstract implements VerbInterface
 
 	public function getVerbGroups(): iterable
 	{
-		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::VERB_GROUPS());
+		return $this->relations->getRelationPointersOfType(RelationPointerTypeEnum::VERB_GROUP());
 	}
 
 	public function getDerivationallyRelatedForms(): iterable

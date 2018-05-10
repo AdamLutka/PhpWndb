@@ -101,13 +101,9 @@ class DiContainerFactory
 
 			// Synset file readers
 			'noun.data.FileReader' => create(FileReader::class)->constructor(get('paths.noun.data')),
-			'noun.index.FileReader' => create(FileReader::class)->constructor(get('paths.noun.index')),
 			'verb.data.FileReader' => create(FileReader::class)->constructor(get('paths.verb.data')),
-			'verb.index.FileReader' => create(FileReader::class)->constructor(get('paths.verb.index')),
 			'adverb.data.FileReader' => create(FileReader::class)->constructor(get('paths.adverb.data')),
-			'adverb.index.FileReader' => create(FileReader::class)->constructor(get('paths.adverb.index')),
 			'adjective.data.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.data')),
-			'adjective.index.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.index')),
 
 			// Synset loaders
 			'noun.data.SynsetLoader' => create(WholeSynsetDataLoader::class)->constructor(get('noun.data.FileReader')),

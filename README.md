@@ -22,7 +22,8 @@ composer require AdamLutka/PhpWndb
 
 ```
 composer install
-vendor/bin/phpunit
+composer phpstan
+composer tests
 ```
 
 ## Versioning

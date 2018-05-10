@@ -9,4 +9,5 @@ install:
   - composer install
 
 script:
-  - ./vendor/bin/phpunit -c ./phpunit.xml
+  - composer phpstan
+  - composer tests
