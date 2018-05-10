@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Parsing\ParsedData;
 
+use AL\PhpWndb\Exceptions\InvalidStateException;
+
 class ParsedSynsetData implements ParsedSynsetDataInterface
 {
 	/** @var int|null */
@@ -27,23 +29,39 @@ class ParsedSynsetData implements ParsedSynsetDataInterface
 	protected $frames = [];
 
 
-	public function getSynsetOffset(): ?int
+	public function getSynsetOffset(): int
 	{
+		if ($this->synsetOffset === null) {
+			throw new InvalidStateException('Synset offset is not set.');
+		}
+
 		return $this->synsetOffset;
 	}
 
-	public function getLexFileNumber(): ?int
+	public function getLexFileNumber(): int
 	{
+		if ($this->lexFileNumber === null) {
+			throw new InvalidStateException('Lex file number is not set.');
+		}
+
 		return $this->lexFileNumber;
 	}
 
-	public function getPartOfSpeech(): ?string
+	public function getPartOfSpeech(): string
 	{
+		if ($this->partOfSpeech === null) {
+			throw new InvalidStateException('Part of speech is not set.');
+		}
+
 		return $this->partOfSpeech;
 	}
 
-	public function getGloss(): ?string
+	public function getGloss(): string
 	{
+		if ($this->gloss === null) {
+			throw new InvalidStateException('Gloss is not set.');
+		}
+
 		return $this->gloss;
 	}
 

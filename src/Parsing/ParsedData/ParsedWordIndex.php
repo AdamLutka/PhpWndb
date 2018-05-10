@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Parsing\ParsedData;
 
+use AL\PhpWndb\Exceptions\InvalidStateException;
+
 class ParsedWordIndex implements ParsedWordIndexInterface
 {
 	/** @var string|null */
@@ -18,13 +20,21 @@ class ParsedWordIndex implements ParsedWordIndexInterface
 	protected $synsetOffsets = [];
 
 
-	public function getLemma(): ?string
+	public function getLemma(): string
 	{
+		if ($this->lemma === null) {
+			throw new InvalidStateException('Lemma is not set.');
+		}
+
 		return $this->lemma;
 	}
 
-	public function getPartOfSpeech(): ?string
+	public function getPartOfSpeech(): string
 	{
+		if ($this->partOfSpeech === null) {
+			throw new InvalidStateException('Part of speech is not set.');
+		}
+
 		return $this->partOfSpeech;
 	}
 

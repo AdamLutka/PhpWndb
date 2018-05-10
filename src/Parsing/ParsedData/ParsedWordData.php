@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Parsing\ParsedData;
 
+use AL\PhpWndb\Exceptions\InvalidStateException;
+
 class ParsedWordData implements ParsedWordDataInterface
 {
 	/** @var string|null */
@@ -12,13 +14,21 @@ class ParsedWordData implements ParsedWordDataInterface
 	public $lexId;
 
 
-	public function getValue(): ?string
+	public function getValue(): string
 	{
+		if ($this->value === null) {
+			throw new InvalidStateException('Value is not set.');
+		}
+
 		return $this->value;
 	}
 
-	public function getLexId(): ?int
+	public function getLexId(): int
 	{
+		if ($this->lexId === null) {
+			throw new InvalidStateException('Lex id is not set.');
+		}
+
 		return $this->lexId;
 	}
 

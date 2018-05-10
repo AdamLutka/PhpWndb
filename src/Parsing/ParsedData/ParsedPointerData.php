@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Parsing\ParsedData;
 
+use AL\PhpWndb\Exceptions\InvalidStateException;
+
 class ParsedPointerData implements ParsedPointerDataInterface
 {
 	/** @var string|null */
@@ -21,28 +23,48 @@ class ParsedPointerData implements ParsedPointerDataInterface
 	protected $targetWordIndex;
 
 
-	public function getPointerType(): ?string
+	public function getPointerType(): string
 	{
+		if ($this->pointerType === null) {
+			throw new InvalidStateException('Pointer type is not set.');
+		}
+
 		return $this->pointerType;
 	}
 
-	public function getSynsetOffset(): ?int
+	public function getSynsetOffset(): int
 	{
+		if ($this->synsetOffset === null) {
+			throw new InvalidStateException('Synset offset is not set.');
+		}
+
 		return $this->synsetOffset;
 	}
 
-	public function getPartOfSpeech(): ?string
+	public function getPartOfSpeech(): string
 	{
+		if ($this->partOfSpeech === null) {
+			throw new InvalidStateException('Part of speech is not set.');
+		}
+
 		return $this->partOfSpeech;
 	}
 
-	public function getSourceWordIndex(): ?int
+	public function getSourceWordIndex(): int
 	{
+		if ($this->sourceWordIndex === null) {
+			throw new InvalidStateException('Source word index is not set.');
+		}
+
 		return $this->sourceWordIndex;
 	}
 
-	public function getTargetWordIndex(): ?int
+	public function getTargetWordIndex(): int
 	{
+		if ($this->targetWordIndex === null) {
+			throw new InvalidStateException('Target word index is not set.');
+		}
+
 		return $this->targetWordIndex;
 	}
 

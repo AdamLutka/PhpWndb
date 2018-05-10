@@ -5,7 +5,7 @@ namespace AL\PhpWndb\Parsing\ParsedData;
 
 interface ParsedFrameDataInterface
 {
-	public function getFrameNumber(): ?int;
+	public function getFrameNumber(): int;
 
-	public function getWordIndex(): ?int;
+	public function getWordIndex(): int;
 }

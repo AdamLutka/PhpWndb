@@ -5,9 +5,9 @@ namespace AL\PhpWndb\Parsing\ParsedData;
 
 interface ParsedWordIndexInterface
 {
-	public function getLemma(): ?string;
+	public function getLemma(): string;
 
-	public function getPartOfSpeech(): ?string;
+	public function getPartOfSpeech(): string;
 
 	/**
 	 * @return string[]

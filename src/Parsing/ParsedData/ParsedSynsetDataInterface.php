@@ -5,13 +5,13 @@ namespace AL\PhpWndb\Parsing\ParsedData;
 
 interface ParsedSynsetDataInterface
 {
-	public function getSynsetOffset(): ?int;
+	public function getSynsetOffset(): int;
 
-	public function getLexFileNumber(): ?int;
+	public function getLexFileNumber(): int;
 
-	public function getPartOfSpeech(): ?string;
+	public function getPartOfSpeech(): string;
 
-	public function getGloss(): ?string;
+	public function getGloss(): string;
 
 	/**
 	 * @return ParsedWordDataInterface[]

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Parsing\ParsedData;
 
+use AL\PhpWndb\Exceptions\InvalidStateException;
+
 class ParsedFrameData implements ParsedFrameDataInterface
 {
 	/** @var int|null */
@@ -13,13 +15,21 @@ class ParsedFrameData implements ParsedFrameDataInterface
 
 
 
-	public function getFrameNumber(): ?int
+	public function getFrameNumber(): int
 	{
+		if ($this->frameNumber === null) {
+			throw new InvalidStateException('Frame number is not set.');
+		}
+
 		return $this->frameNumber;
 	}
 
-	public function getWordIndex(): ?int
+	public function getWordIndex(): int
 	{
+		if ($this->wordIndex === null) {
+			throw new InvalidStateException('Word index is not set.');
+		}
+
 		return $this->wordIndex;
 	}
 
