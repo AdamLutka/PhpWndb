@@ -6,7 +6,7 @@ namespace AL\PhpWndb\DataStorage;
 use AL\PhpWndb\Exceptions\IOException;
 use AL\PhpWndb\Exceptions\InvalidStateException;
 
-class WholeWordIndexLoader implements WordIndexLoaderInterface
+class MemoryConsumingWordIndexLoader implements WordIndexLoaderInterface
 {
 	/** @var FileReaderInterface */
 	protected $reader;
