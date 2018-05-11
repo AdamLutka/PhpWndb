@@ -4,10 +4,10 @@ declare(strict_types = 1);
 namespace AL\PhpWndb\Tests\DataStorage;
 
 use AL\PhpWndb\DataStorage\FileReaderInterface;
-use AL\PhpWndb\DataStorage\WholeSynsetDataLoader;
+use AL\PhpWndb\DataStorage\MemoryConsumingSynsetDataLoader;
 use AL\PhpWndb\Tests\BaseTestAbstract;
 
-class WholeSynsetDataLoaderTest extends BaseTestAbstract
+class MemoryConsumingSynsetDataLoaderTest extends BaseTestAbstract
 {
 	public function testFindSynsetData(): void
 	{
@@ -94,11 +94,11 @@ class WholeSynsetDataLoaderTest extends BaseTestAbstract
 	}
 
 
-	private function createLoader(array $data): WholeSynsetDataLoader
+	private function createLoader(array $data): MemoryConsumingSynsetDataLoader
 	{
 		$loader = $this->createMock(FileReaderInterface::class);
 		$loader->method('readAll')->willReturn($data);
 
-		return new WholeSynsetDataLoader($loader);
+		return new MemoryConsumingSynsetDataLoader($loader);
 	}
 }

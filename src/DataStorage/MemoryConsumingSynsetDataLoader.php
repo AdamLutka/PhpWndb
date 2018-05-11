@@ -7,7 +7,7 @@ use AL\PhpWndb\Exceptions\InvalidStateException;
 use AL\PhpWndb\Exceptions\IOException;
 use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 
-class WholeSynsetDataLoader implements SynsetDataLoaderInterface
+class MemoryConsumingSynsetDataLoader implements SynsetDataLoaderInterface
 {
 	/** @private */
 	const SYNSET_OFFSET_CHARS_COUNT = 8;

@@ -12,7 +12,7 @@ use AL\PhpWndb\DataMapping\RelationPointerTypeMapperInterface;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapper;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapperInterface;
 use AL\PhpWndb\DataStorage\FileReader;
-use AL\PhpWndb\DataStorage\WholeSynsetDataLoader;
+use AL\PhpWndb\DataStorage\MemoryConsumingSynsetDataLoader;
 use AL\PhpWndb\DataStorage\WholeWordIndexLoader;
 use AL\PhpWndb\Model\Indexes\WordIndexFactory;
 use AL\PhpWndb\Model\Indexes\WordIndexFactoryInterface;
@@ -106,10 +106,10 @@ class DiContainerFactory
 			'adjective.data.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.data')),
 
 			// Synset loaders
-			'noun.data.SynsetLoader' => create(WholeSynsetDataLoader::class)->constructor(get('noun.data.FileReader')),
-			'verb.data.SynsetLoader' => create(WholeSynsetDataLoader::class)->constructor(get('verb.data.FileReader')),
-			'adverb.data.SynsetLoader' => create(WholeSynsetDataLoader::class)->constructor(get('adverb.data.FileReader')),
-			'adjective.data.SynsetLoader' => create(WholeSynsetDataLoader::class)->constructor(get('adjective.data.FileReader')),
+			'noun.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('noun.data.FileReader')),
+			'verb.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('verb.data.FileReader')),
+			'adverb.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('adverb.data.FileReader')),
+			'adjective.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('adjective.data.FileReader')),
 
 			// Synset repositories
 			'noun.data.Repository' => autowire(SynsetRepository::class)->constructorParameter('dataLoader', get('noun.data.SynsetLoader')),
