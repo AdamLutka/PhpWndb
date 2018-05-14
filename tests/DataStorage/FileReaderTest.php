@@ -66,6 +66,23 @@ class FileReaderTest extends BaseTestAbstract
 	}
 
 
+	public function testGetFileSize(): void
+	{
+		$reader = $this->createReader();
+
+		static::assertSame(19, $reader->getFileSize());
+	}
+
+	/**
+	 * @expectedException \AL\PhpWndb\Exceptions\IOException
+	 */
+	public function testGetFileSizeNotExist(): void
+	{
+		$reader = new FileReader(__DIR__ . '/FileReaderTest.not_exist');
+		$reader->getFileSize();
+	}
+
+
 	protected function createReader(): FileReader
 	{
 		return new FileReader(__DIR__ . '/FileReaderTest.data');

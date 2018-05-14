@@ -19,4 +19,6 @@ interface FileReaderInterface
 	 * @throws InvalidArgumentException
 	 */
 	public function readBlock(int $blockOffset, int $blockSize): string;
+
+	public function getFileSize(): int;
 }

@@ -14,6 +14,9 @@ class FileReader implements FileReaderInterface
 	/** @var resource|null */
 	protected $handle;
 
+	/** @var int|null */
+	protected $filesize;
+
 
 	public function __construct(string $filepath)
 	{
@@ -57,6 +60,16 @@ class FileReader implements FileReaderInterface
 
 		$this->seekFile($blockOffset);
 		return $this->readFile($blockSize);
+	}
+
+	public function getFileSize(): int
+	{
+		if ($this->filesize === null) {
+			$this->checkReadability();
+			$this->filesize = $this->findOutFileSize();
+		}
+
+		return $this->filesize;
 	}
 
 
@@ -107,6 +120,19 @@ class FileReader implements FileReaderInterface
 		}
 
 		return $result;
+	}
+
+	/**
+	 * @throws IOException
+	 */
+	protected function findOutFileSize(): int
+	{
+		$size = @filesize($this->filepath);
+		if ($size === false) {
+			throw new IOException("File ({$this->filepath}) get size failed: " . $this->getLastErrorMessage());
+		}
+
+		return $size;
 	}
 
 	/**
