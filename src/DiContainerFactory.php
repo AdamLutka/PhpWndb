@@ -12,8 +12,8 @@ use AL\PhpWndb\DataMapping\RelationPointerTypeMapperInterface;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapper;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapperInterface;
 use AL\PhpWndb\DataStorage\FileReader;
-use AL\PhpWndb\DataStorage\MemoryConsumingSynsetDataLoader;
-use AL\PhpWndb\DataStorage\MemoryConsumingWordIndexLoader;
+use AL\PhpWndb\DataStorage\TimeConsumingSynsetDataLoader;
+use AL\PhpWndb\DataStorage\TimeConsumingWordIndexLoader;
 use AL\PhpWndb\Model\Indexes\WordIndexFactory;
 use AL\PhpWndb\Model\Indexes\WordIndexFactoryInterface;
 use AL\PhpWndb\Model\Relations\RelationPointerFactory;
@@ -106,10 +106,10 @@ class DiContainerFactory
 			'adjective.data.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.data')),
 
 			// Synset loaders
-			'noun.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('noun.data.FileReader')),
-			'verb.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('verb.data.FileReader')),
-			'adverb.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('adverb.data.FileReader')),
-			'adjective.data.SynsetLoader' => create(MemoryConsumingSynsetDataLoader::class)->constructor(get('adjective.data.FileReader')),
+			'noun.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('noun.data.FileReader')),
+			'verb.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('verb.data.FileReader')),
+			'adverb.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('adverb.data.FileReader')),
+			'adjective.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('adjective.data.FileReader')),
 
 			// Synset repositories
 			'noun.data.Repository' => autowire(SynsetRepository::class)->constructorParameter('dataLoader', get('noun.data.SynsetLoader')),
@@ -134,10 +134,10 @@ class DiContainerFactory
 			'adjective.index.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.index')),
 
 			// Word index loaders
-			'noun.index.WordIndexLoader' => create(MemoryConsumingWordIndexLoader::class)->constructor(get('noun.index.FileReader')),
-			'verb.index.WordIndexLoader' => create(MemoryConsumingWordIndexLoader::class)->constructor(get('verb.index.FileReader')),
-			'adverb.index.WordIndexLoader' => create(MemoryConsumingWordIndexLoader::class)->constructor(get('adverb.index.FileReader')),
-			'adjective.index.WordIndexLoader' => create(MemoryConsumingWordIndexLoader::class)->constructor(get('adjective.index.FileReader')),
+			'noun.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('noun.index.FileReader')),
+			'verb.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('verb.index.FileReader')),
+			'adverb.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('adverb.index.FileReader')),
+			'adjective.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('adjective.index.FileReader')),
 
 			// Word index repositories
 			'noun.index.Repository' => autowire(WordIndexRepository::class)->constructorParameter('wordIndexLoader', get('noun.index.WordIndexLoader')),
