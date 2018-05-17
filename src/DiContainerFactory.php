@@ -33,8 +33,8 @@ use AL\PhpWndb\Repositories\SynsetRepository;
 use AL\PhpWndb\Repositories\SynsetMultiRepository;
 use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
 use AL\PhpWndb\Repositories\WordIndexMultiRepository;
+use AL\PhpWndb\Repositories\WordIndexMultiRepositoryInterface;
 use AL\PhpWndb\Repositories\WordIndexRepository;
-use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;
 use AL\PhpWndb\WordNet;
 
 use DI\ContainerBuilder;
@@ -145,13 +145,14 @@ class DiContainerFactory
 			'adverb.index.Repository' => autowire(WordIndexRepository::class)->constructorParameter('wordIndexLoader', get('adverb.index.WordIndexLoader')),
 			'adjective.index.Repository' => autowire(WordIndexRepository::class)->constructorParameter('wordIndexLoader', get('adjective.index.WordIndexLoader')),
 
-			WordIndexRepositoryInterface::class => function(ContainerInterface $container) {
-					return new WordIndexMultiRepository([
-						$container->get('noun.index.Repository'),
-						$container->get('verb.index.Repository'),
-						$container->get('adjective.index.Repository'),
-						$container->get('adverb.index.Repository'),
-					]);
+			WordIndexMultiRepositoryInterface::class => function(ContainerInterface $container) {
+					$repository = new WordIndexMultiRepository();
+					$repository->addRepository(PartOfSpeechEnum::NOUN(),      $container->get('noun.index.Repository'));
+					$repository->addRepository(PartOfSpeechEnum::VERB(),      $container->get('verb.index.Repository'));
+					$repository->addRepository(PartOfSpeechEnum::ADJECTIVE(), $container->get('adjective.index.Repository'));
+					$repository->addRepository(PartOfSpeechEnum::ADVERB(),    $container->get('adverb.index.Repository'));
+
+					return $repository;
 				},
 
 			// ...

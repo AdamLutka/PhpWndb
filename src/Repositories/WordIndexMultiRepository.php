@@ -4,19 +4,18 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Repositories;
 
 use AL\PhpWndb\Model\Indexes\WordIndexInterface;
+use AL\PhpWndb\PartOfSpeechEnum;
+use UnexpectedValueException;
 
-class WordIndexMultiRepository implements WordIndexRepositoryInterface
+class WordIndexMultiRepository implements WordIndexMultiRepositoryInterface
 {
 	/** @var WordIndexRepositoryInterface[] */
-	protected $repositories;
+	protected $repositories = [];
 
 
-	/**
-	 * @param WordIndexRepositoryInterface[] $repositories
-	 */
-	public function __construct(array $repositories)
+	public function addRepository(PartOfSpeechEnum $partOfSpeech, WordIndexRepositoryInterface $repository): void
 	{
-		$this->repositories = $repositories;
+		$this->repositories[(string)$partOfSpeech] = $repository;
 	}
 
 
@@ -31,6 +30,17 @@ class WordIndexMultiRepository implements WordIndexRepositoryInterface
 
 		return null;
 	}
+
+	public function findWordIndexByPartOfSpeech(PartOfSpeechEnum $partOfSpeech, string $lemma): ?WordIndexInterface
+	{
+		$key = (string)$partOfSpeech;
+		if (!isset($this->repositories[$key])) {
+			throw new UnexpectedValueException("Repository for $partOfSpeech is not registered.");
+		}
+
+		return $this->repositories[$key]->findWordIndex($lemma);
+	}
+
 
 	public function dispose(WordIndexInterface $wordIndex): void
 	{
