@@ -5,18 +5,18 @@ namespace AL\PhpWndb;
 
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
 use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
-use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;
+use AL\PhpWndb\Repositories\WordIndexMultiRepositoryInterface;
 
 class WordNet
 {
 	/** @var SynsetMultiRepositoryInterface */
 	protected $synsetRepository;
 
-	/** @var WordIndexRepositoryInterface */
+	/** @var WordIndexMultiRepositoryInterface */
 	protected $wordIndexRepository;
 
 
-	public function __construct(SynsetMultiRepositoryInterface $synsetRepository, WordIndexRepositoryInterface $wordIndexRepository)
+	public function __construct(SynsetMultiRepositoryInterface $synsetRepository, WordIndexMultiRepositoryInterface $wordIndexRepository)
 	{
 		$this->synsetRepository = $synsetRepository;
 		$this->wordIndexRepository = $wordIndexRepository;

@@ -7,7 +7,7 @@ use AL\PhpWndb\Model\Indexes\WordIndexInterface;
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
-use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;
+use AL\PhpWndb\Repositories\WordIndexMultiRepositoryInterface;
 use AL\PhpWndb\WordNet;
 
 class WordNetTest extends BaseTestAbstract
@@ -36,7 +36,7 @@ class WordNetTest extends BaseTestAbstract
 	private function createWordNet(?array $synsetOffsets): WordNet
 	{
 		$synsetRepository = $this->createMock(SynsetMultiRepositoryInterface::class);
-		$wordIndexRepository = $this->createMock(WordIndexRepositoryInterface::class);
+		$wordIndexRepository = $this->createMock(WordIndexMultiRepositoryInterface::class);
 
 		if ($synsetOffsets !== null) {
 			$wordIndex = $this->createMock(WordIndexInterface::class);
