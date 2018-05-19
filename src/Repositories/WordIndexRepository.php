@@ -42,6 +42,10 @@ class WordIndexRepository implements WordIndexRepositoryInterface
 
 	public function findWordIndex(string $lemma): ?WordIndexInterface
 	{
+		if (empty($lemma)) {
+			return null;
+		}
+
 		$lemmaToken = $this->getLemmaToken($lemma);
 		if (!array_key_exists($lemmaToken, $this->wordIndexes)) {
 			$this->wordIndexes[$lemmaToken] = $this->doFindWordIndex($lemmaToken);
