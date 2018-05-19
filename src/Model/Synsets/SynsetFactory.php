@@ -185,10 +185,10 @@ class SynsetFactory implements SynsetFactoryInterface
 		$lemma = $this->lemmaMapper->tokenToLemma($wordData->getValue());
 
 		switch ($partOfSpeech) {
-			case PartOfSpeechEnum::ADJECTIVE(): return $this->wordFactory->createAdjective($lemma, $wordData->getLexId(), $relations);
-			case PartOfSpeechEnum::ADVERB():    return $this->wordFactory->createAdverb($lemma, $wordData->getLexId(), $relations);
 			case PartOfSpeechEnum::NOUN():      return $this->wordFactory->createNoun($lemma, $wordData->getLexId(), $relations);
 			case PartOfSpeechEnum::VERB():      return $this->wordFactory->createVerb($lemma, $wordData->getLexId(), $relations, $frames);
+			case PartOfSpeechEnum::ADJECTIVE(): return $this->wordFactory->createAdjective($lemma, $wordData->getLexId(), $relations);
+			case PartOfSpeechEnum::ADVERB():    return $this->wordFactory->createAdverb($lemma, $wordData->getLexId(), $relations);
 			default: throw new InvalidArgumentException("Unknown part of speech: $partOfSpeech");
 		}
 	}
