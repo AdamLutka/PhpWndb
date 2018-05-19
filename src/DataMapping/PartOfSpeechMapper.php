@@ -13,8 +13,8 @@ class PartOfSpeechMapper implements PartOfSpeechMapperInterface
 		switch ($token) {
 			case "n": return PartOfSpeechEnum::NOUN();
 			case "v": return PartOfSpeechEnum::VERB();
+			case "s": // ADJECTIVE SATELLITE
 			case "a": return PartOfSpeechEnum::ADJECTIVE();
-			case "s": return PartOfSpeechEnum::ADJECTIVE_SATELLITE();
 			case "r": return PartOfSpeechEnum::ADVERB();
 			default: throw new UnexpectedValueException("Unknown part of speech token: $token");
 		}

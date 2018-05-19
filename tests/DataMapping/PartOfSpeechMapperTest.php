@@ -22,11 +22,11 @@ class PartOfSpeechMapperTest extends BaseTestAbstract
 	public function dpTestTokenToPartOfSpeech(): array
 	{
 		return [
-			[PartOfSpeechEnum::NOUN(),                'n'],
-			[PartOfSpeechEnum::VERB(),                'v'],
-			[PartOfSpeechEnum::ADJECTIVE(),           'a'],
-			[PartOfSpeechEnum::ADJECTIVE_SATELLITE(), 's'],
-			[PartOfSpeechEnum::ADVERB(),              'r'],
+			[PartOfSpeechEnum::NOUN(),      'n'],
+			[PartOfSpeechEnum::VERB(),      'v'],
+			[PartOfSpeechEnum::ADJECTIVE(), 'a'],
+			[PartOfSpeechEnum::ADJECTIVE(), 's'],
+			[PartOfSpeechEnum::ADVERB(),    'r'],
 		];
 	}
 
