@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use AL\PhpWndb\DiContainerFactory;
-use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;
+use AL\PhpWndb\Repositories\WordIndexMultiRepositoryInterface;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
@@ -10,7 +10,7 @@ $containerFactory = new DiContainerFactory();
 $container = $containerFactory->createContainer();
 
 /** @var WordIndexRepositoryInterface */
-$repository = $container->get(WordIndexRepositoryInterface::class);
+$repository = $container->get(WordIndexMultiRepositoryInterface::class);
 
 $index = $repository->findWordIndex('cat');
 $synsetOffsets = $index->getSynsetOffsets();
