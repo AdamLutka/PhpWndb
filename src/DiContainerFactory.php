@@ -11,6 +11,7 @@ use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapperInterface;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapper;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapperInterface;
+use AL\PhpWndb\DataStorage\FileBinarySearcher;
 use AL\PhpWndb\DataStorage\FileReader;
 use AL\PhpWndb\DataStorage\TimeConsumingSynsetDataLoader;
 use AL\PhpWndb\DataStorage\TimeConsumingWordIndexLoader;
@@ -88,7 +89,11 @@ class DiContainerFactory
 			'paths.adjective.data'  => diString('{paths.dbDirectory}/data.adj'),
 			'paths.adjective.index' => diString('{paths.dbDirectory}/index.adj'),
 
-			'sizes.readBlock.synset' => 16 * 1024, // 16 KiB
+			'sizes.readBlock.synset'    => 16 * 1024,  // 16 KiB
+			'sizes.readBlock.wordIndex' => 256 * 1024, // 256 KiB
+
+			'format.wordIndex.recordSeparator'       => "\n",
+			'format.wordIndex.recordPrefixSeparator' => ' ',
 		];
 	}
 
@@ -134,6 +139,32 @@ class DiContainerFactory
 			'verb.index.FileReader' => create(FileReader::class)->constructor(get('paths.verb.index')),
 			'adverb.index.FileReader' => create(FileReader::class)->constructor(get('paths.adverb.index')),
 			'adjective.index.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.index')),
+
+			// Word index binary searchers
+			'noun.index.FileBinarySearcher' => create(FileBinarySearcher::class)->constructor(
+					get('noun.index.FileReader'),
+					get('format.wordIndex.recordSeparator'),
+					get('format.wordIndex.recordPrefixSeparator'),
+					get('sizes.readBlock.wordIndex')
+				),
+			'verb.index.FileBinarySearcher' => create(FileBinarySearcher::class)->constructor(
+					get('verb.index.FileReader'),
+					get('format.wordIndex.recordSeparator'),
+					get('format.wordIndex.recordPrefixSeparator'),
+					get('sizes.readBlock.wordIndex')
+				),
+			'adverb.index.FileBinarySearcher' => create(FileBinarySearcher::class)->constructor(
+					get('adverb.index.FileReader'),
+					get('format.wordIndex.recordSeparator'),
+					get('format.wordIndex.recordPrefixSeparator'),
+					get('sizes.readBlock.wordIndex')
+				),
+			'adjective.index.FileBinarySearcher' => create(FileBinarySearcher::class)->constructor(
+					get('adjective.index.FileReader'),
+					get('format.wordIndex.recordSeparator'),
+					get('format.wordIndex.recordPrefixSeparator'),
+					get('sizes.readBlock.wordIndex')
+				),
 
 			// Word index loaders
 			'noun.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('noun.index.FileReader')),
