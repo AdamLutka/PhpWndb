@@ -8,27 +8,27 @@ use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 
 class TimeConsumingSynsetDataLoader implements SynsetDataLoaderInterface
 {
-	/** @internal */
-	const BLOCK_SIZE = 16 * 1024; // 16 KiB
-
-
 	/** @var FileReaderInterface */
 	protected $fileReader;
 
+	/** @var int */
+	protected $readBlockSize;
 
-	public function __construct(FileReaderInterface $fileReader)
+
+	public function __construct(FileReaderInterface $fileReader, int $readBlockSize)
 	{
 		$this->fileReader = $fileReader;
+		$this->readBlockSize = $readBlockSize;
 	}
 
 
 	public function findSynsetData(int $synsetOffset): ?string
 	{
-		$block = $this->fileReader->readBlock($synsetOffset, static::BLOCK_SIZE);
+		$block = $this->fileReader->readBlock($synsetOffset, $this->readBlockSize);
 		list($synsetData, $rest) = explode("\n", $block, 2) + [null, null];
 
 		if ($rest === null) {
-			throw new InvalidStateException('There is synset data bigger than ' . static::BLOCK_SIZE . ' B.');
+			throw new InvalidStateException('There is synset data bigger than ' . $this->readBlockSize . ' B.');
 		}
 
 		// synset data is valid only if it starts with synset offset

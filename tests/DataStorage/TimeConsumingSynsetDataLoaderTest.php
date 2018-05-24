@@ -51,6 +51,6 @@ class TimeConsumingSynsetDataLoaderTest extends BaseTestAbstract
 		$loader = $this->createMock(FileReaderInterface::class);
 		$loader->method('readBlock')->willReturn($blockData . "\n some other data");
 
-		return new TimeConsumingSynsetDataLoader($loader);
+		return new TimeConsumingSynsetDataLoader($loader, 1024);
 	}
 }

@@ -87,6 +87,8 @@ class DiContainerFactory
 			'paths.adverb.index'    => diString('{paths.dbDirectory}/index.adv'),
 			'paths.adjective.data'  => diString('{paths.dbDirectory}/data.adj'),
 			'paths.adjective.index' => diString('{paths.dbDirectory}/index.adj'),
+
+			'sizes.readBlock.synset' => 16 * 1024, // 16 KiB
 		];
 	}
 
@@ -106,10 +108,10 @@ class DiContainerFactory
 			'adjective.data.FileReader' => create(FileReader::class)->constructor(get('paths.adjective.data')),
 
 			// Synset loaders
-			'noun.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('noun.data.FileReader')),
-			'verb.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('verb.data.FileReader')),
-			'adverb.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('adverb.data.FileReader')),
-			'adjective.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('adjective.data.FileReader')),
+			'noun.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('noun.data.FileReader'), get('sizes.readBlock.synset')),
+			'verb.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('verb.data.FileReader'), get('sizes.readBlock.synset')),
+			'adverb.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('adverb.data.FileReader'), get('sizes.readBlock.synset')),
+			'adjective.data.SynsetLoader' => create(TimeConsumingSynsetDataLoader::class)->constructor(get('adjective.data.FileReader'), get('sizes.readBlock.synset')),
 
 			// Synset repositories
 			'noun.data.Repository' => autowire(SynsetRepository::class)->constructorParameter('dataLoader', get('noun.data.SynsetLoader')),
