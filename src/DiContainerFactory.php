@@ -167,10 +167,10 @@ class DiContainerFactory
 				),
 
 			// Word index loaders
-			'noun.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('noun.index.FileReader')),
-			'verb.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('verb.index.FileReader')),
-			'adverb.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('adverb.index.FileReader')),
-			'adjective.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('adjective.index.FileReader')),
+			'noun.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('noun.index.FileBinarySearcher')),
+			'verb.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('verb.index.FileBinarySearcher')),
+			'adverb.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('adverb.index.FileBinarySearcher')),
+			'adjective.index.WordIndexLoader' => create(TimeConsumingWordIndexLoader::class)->constructor(get('adjective.index.FileBinarySearcher')),
 
 			// Word index repositories
 			'noun.index.Repository' => autowire(WordIndexRepository::class)->constructorParameter('wordIndexLoader', get('noun.index.WordIndexLoader')),
