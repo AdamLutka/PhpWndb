@@ -33,7 +33,7 @@
 		}
 	],
 	"require": {
-		"AdamLutka/PhpEnum": "^0.1",
+		"adamlutka/phpenum": "^0.1",
 		"php-di/php-di": "^6.0"
 	},
 	"scripts": {
