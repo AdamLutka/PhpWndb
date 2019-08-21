@@ -36,24 +36,27 @@ class FileBinarySearcher implements FileBinarySearcherInterface
 			throw new InvalidArgumentException('Record prefix has to be non empty.');
 		}
 
-		$startOffset = 0;
-		$endOffset = $this->fileReader->getFileSize();
+		$startOffset = $nextStartOffset = 0;
+		$endOffset = $nextEndOffset = $this->fileReader->getFileSize();
 
-		for (;;) {
+		do {
+			$startOffset = $nextStartOffset;
+			$endOffset = $nextEndOffset;
 			$block = $this->readCenterBlock($startOffset, $endOffset);
 
 			if ($block->isPredecessor($recordPrefix)) {
-				$endOffset = $block->getStartOffset();
+				$nextEndOffset = $block->getStartOffset();
 			}
 			else {
 				$record = $block->findRecord($recordPrefix, $this->recordSeparator, $this->recordPrefixSeparator);
-				if ($record !== null || $endOffset - $startOffset <= $this->readBlockSize) {
+				if ($record !== null) {
 					return $record;
 				}
 
-				$startOffset = $block->getEndOffset();
+				$nextStartOffset = $block->getEndOffset();
 			}
 		}
+		while ($endOffset - $startOffset > $this->readBlockSize);
 
 		return null;
 	}

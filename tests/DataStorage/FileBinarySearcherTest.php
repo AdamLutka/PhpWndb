@@ -25,6 +25,7 @@ class FileBinarySearcherTest extends BaseTestAbstract
 			['1-dodecanol', '1-dodecanol n 1 1 @ 1 0 14954808  '],
 			['attlee',      'attlee n 1 1 @ 1 0 10847477  '],
 			['arda',        'arda n 1 2 @ #p 1 0 08357680  '],
+			['aaaa',        null],
 			['xxx',         null],
 		];
 	}
@@ -44,6 +45,6 @@ class FileBinarySearcherTest extends BaseTestAbstract
 	protected function createSearcher(): FileBinarySearcher
 	{
 		$reader = new FileReader(__DIR__ . '/FileBinarySearcherTest.data');
-		return new FileBinarySearcher($reader, "\n", ' ', 128 * 1024);
+		return new FileBinarySearcher($reader, "\n", ' ', 4 * 1024);
 	}
 }
