@@ -29,7 +29,8 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "https://github.com/AdamLutka/PhpEnum"
+			"url": "https://github.com/AdamLutka/PhpEnum",
+			"no-api": true
 		}
 	],
 	"require": {
