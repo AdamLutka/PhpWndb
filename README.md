@@ -1,10 +1,6 @@
 # PHP API for WordNet database [![Build Status](https://travis-ci.org/AdamLutka/PhpWndb.svg?branch=master)](https://travis-ci.org/AdamLutka/PhpWndb)
 
-[WordNet database](https://wordnet.princeton.edu/) provides kind of semantic of words stored in files. This project is PHP API for easy reading of these files.
-
-```
-see examples/wordNet.php
-```
+[WordNet database](https://wordnet.princeton.edu/) provides kind of semantic of words stored in files. This project is PHP API for easy reading of these files. See [examples/wordNet.php](examples/wordNet.php).
 
 ## Getting Started
 
@@ -15,7 +11,9 @@ The code needs PHP 7.1 or greater.
 ### Installing
 
 ```
-composer require AdamLutka/PhpWndb
+composer config repositories.phpwndb git https://github.com/AdamLutka/PhpWndb
+composer config repositories.phpenum git https://github.com/AdamLutka/PhpEnum
+composer require adam-lutka/php-wndb
 ```
 
 ## Running the tests
