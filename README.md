@@ -11,8 +11,6 @@ The code needs PHP 7.1 or greater.
 ### Installing
 
 ```
-composer config repositories.phpwndb git https://github.com/AdamLutka/PhpWndb
-composer config repositories.phpenum git https://github.com/AdamLutka/PhpEnum
 composer require adam-lutka/php-wndb
 ```
 
