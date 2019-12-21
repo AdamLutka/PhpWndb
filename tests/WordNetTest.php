@@ -56,7 +56,7 @@ class WordNetTest extends BaseTestAbstract
 			$wordIndex = null;
 		}
 
-		$wordIndexRepository->method('findWordIndex')->willReturn($wordIndex);
+		$wordIndexRepository->method('findAllWordIndices')->willReturn($wordIndex ? [$wordIndex] : []);
 
 		return new WordNet($synsetRepository, $wordIndexRepository);
 	}

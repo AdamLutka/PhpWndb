@@ -28,15 +28,17 @@ class WordNet
 	 */
 	public function searchLemma(string $lemma): array
 	{
-		$wordIndex = $this->wordIndexRepository->findWordIndex($lemma);
-		if ($wordIndex === null) {
-			return [];  // unknown lemma isn't inside any synset
+		$synsets = [];
+		$wordIndices = $this->wordIndexRepository->findAllWordIndices($lemma);
+
+		foreach ($wordIndices as $wordIndex) {
+			$partOfSpeech = $wordIndex->getPartOfSpeech();
+
+			foreach ($wordIndex->getSynsetOffsets() as $synsetOffset) {
+				$synsets[] = $this->synsetRepository->getSynsetByPartOfSpeech($partOfSpeech, $synsetOffset);
+			}
 		}
 
-		$partOfSpeech = $wordIndex->getPartOfSpeech();
-
-		return array_map(function (int $synsetOffset) use ($partOfSpeech) {
-			return $this->synsetRepository->getSynsetByPartOfSpeech($partOfSpeech, $synsetOffset);
-		}, $wordIndex->getSynsetOffsets());
+		return $synsets;
 	}
 }
