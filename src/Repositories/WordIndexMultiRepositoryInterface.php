@@ -14,7 +14,7 @@ interface WordIndexMultiRepositoryInterface extends WordIndexRepositoryInterface
 	public function findAllWordIndices(string $lemma): array;
 
 	/**
-	 * @throws UnexpectedValueException
+	 * @throws \UnexpectedValueException
 	 */
 	public function findWordIndexByPartOfSpeech(PartOfSpeechEnum $partOfSpeech, string $lemma): ?WordIndexInterface;
 }

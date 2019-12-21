@@ -25,6 +25,7 @@ class SynsetAdjectives extends SynsetAbstract implements SynsetAdjectivesInterfa
 
 	public function getAdjectives(): array
 	{
+		/** @var AdjectiveInterface[] */
 		return $this->words;
 	}
 

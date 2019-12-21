@@ -23,7 +23,7 @@ class WordIndexRepository implements WordIndexRepositoryInterface
 	/** @var WordIndexFactoryInterface */
 	protected $wordIndexFactory;
 
-	/** @var WordIndexInterface|null[] */
+	/** @var (WordIndexInterface|null)[] */
 	protected $wordIndexes = [];
 
 

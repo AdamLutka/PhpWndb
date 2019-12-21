@@ -25,6 +25,7 @@ class SynsetAdverbs extends SynsetAbstract implements SynsetAdverbsInterface
 
 	public function getAdverbs(): array
 	{
+		/** @var AdverbInterface[] */
 		return $this->words;
 	}
 

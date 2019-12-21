@@ -25,6 +25,7 @@ class SynsetVerbs extends SynsetAbstract implements SynsetVerbsInterface
 
 	public function getVerbs(): array
 	{
+		/** @var VerbInterface[] */
 		return $this->words;
 	}
 

@@ -16,6 +16,10 @@ use AL\PhpWndb\Model\Synsets\Adjectives\SynsetAdjectives;
 use AL\PhpWndb\Model\Synsets\Adverbs\SynsetAdverbs;
 use AL\PhpWndb\Model\Synsets\Nouns\SynsetNouns;
 use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbs;
+use AL\PhpWndb\Model\Words\AdjectiveInterface;
+use AL\PhpWndb\Model\Words\AdverbInterface;
+use AL\PhpWndb\Model\Words\NounInterface;
+use AL\PhpWndb\Model\Words\VerbInterface;
 use AL\PhpWndb\Model\Words\WordFactoryInterface;
 use AL\PhpWndb\Model\Words\WordInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedFrameDataInterface;
@@ -92,6 +96,7 @@ class SynsetFactory implements SynsetFactoryInterface
 
 
 	/**
+	 * @param WordInterface[] $words
 	 * @throws UnexpectedValueException
 	 */
 	protected function createSynset(PartOfSpeechEnum $partOfSpeech, int $synsetOffset, string $gloss, array $words, int $synsetCategoryData): SynsetInterface
@@ -99,18 +104,22 @@ class SynsetFactory implements SynsetFactoryInterface
 		switch ($partOfSpeech) {
 			case PartOfSpeechEnum::ADJECTIVE():
 				$synsetCategory = $this->synsetCategoryMapper->mapSynsetAdjectivesCategory($synsetCategoryData);
+				/** @var AdjectiveInterface[] $words */
 				return new SynsetAdjectives($synsetOffset, $gloss, $words, $synsetCategory);
 
 			case PartOfSpeechEnum::ADVERB():
 				$synsetCategory = $this->synsetCategoryMapper->mapSynsetAdverbsCategory($synsetCategoryData);
+				/** @var AdverbInterface[] $words */
 				return new SynsetAdverbs($synsetOffset, $gloss, $words, $synsetCategory);
 
 			case PartOfSpeechEnum::NOUN():
 				$synsetCategory = $this->synsetCategoryMapper->mapSynsetNounsCategory($synsetCategoryData);
+				/** @var NounInterface[] $words */
 				return new SynsetNouns($synsetOffset, $gloss, $words, $synsetCategory);
 
 			case PartOfSpeechEnum::VERB():
 				$synsetCategory = $this->synsetCategoryMapper->mapSynsetVerbsCategory($synsetCategoryData);
+				/** @var VerbInterface[] $words */
 				return new SynsetVerbs($synsetOffset, $gloss, $words, $synsetCategory);
 
 			default:
@@ -200,7 +209,7 @@ class SynsetFactory implements SynsetFactoryInterface
  */
 class ArraysHolder
 {
-	/** @var array */
+	/** @var array<int,mixed> */
 	private $data = [];
 
 	/** @var int */
@@ -214,6 +223,7 @@ class ArraysHolder
 
 
 	/**
+	 * @param mixed $value
 	 * @throws OutOfRangeException
 	 */
 	public function add(int $index, $value): void
@@ -230,12 +240,18 @@ class ArraysHolder
 		}
 	}
 
+	/**
+	 * @return array<mixed>
+	 */
 	public function get(int $index): array
 	{
 		return $this->data[$index] ?? [];
 	}
 
 
+	/**
+	 * @param mixed $value
+	 */
 	private function addToAll($value): void
 	{
 		for ($i = 0; $i < $this->count; ++$i) {

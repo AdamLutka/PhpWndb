@@ -25,6 +25,7 @@ class SynsetNouns extends SynsetAbstract implements SynsetNounsInterface
 
 	public function getNouns(): array
 	{
+		/** @var NounInterface[] */
 		return $this->words;
 	}
 

@@ -76,6 +76,9 @@ class DiContainerFactory
 		return $builder;
 	}
 
+	/**
+	 * @return array<string,mixed>
+	 */
 	protected function createParameters(): array
 	{
 		return [
@@ -97,6 +100,9 @@ class DiContainerFactory
 		];
 	}
 
+	/**
+	 * @return array<string,mixed>
+	 */
 	protected function createServices(): array
 	{
 		return [

@@ -20,7 +20,7 @@ class SynsetRepository implements SynsetRepositoryInterface
 	/** @var SynsetDataLoaderInterface */
 	protected $dataLoader;
 
-	/** @var SynsetInterface|null[] */
+	/** @var (SynsetInterface|null)[] */
 	protected $synsets = [];
 
 

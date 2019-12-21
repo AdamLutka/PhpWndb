@@ -96,6 +96,6 @@ class TokensQueue
 			throw new InvalidArgumentException("Hexadecimal integer expected: $token");
 		}
 
-		return hexdec($token);
+		return (int)hexdec($token);
 	}
 }
