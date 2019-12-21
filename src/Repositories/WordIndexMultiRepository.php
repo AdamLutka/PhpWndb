@@ -19,6 +19,23 @@ class WordIndexMultiRepository implements WordIndexMultiRepositoryInterface
 	}
 
 
+	/**
+	 * @return WordIndexInterface[]
+	 */
+	public function findAllWordIndices(string $lemma): array
+	{
+		$wordIndicies = [];
+
+		foreach ($this->repositories as $repository) {
+			$wordIndex = $repository->findWordIndex($lemma);
+			if ($wordIndex !== null) {
+				$wordIndicies[] = $wordIndex;
+			}
+		}
+
+		return $wordIndicies;
+	}
+
 	public function findWordIndex(string $lemma): ?WordIndexInterface
 	{
 		foreach ($this->repositories as $repository) {

@@ -9,6 +9,11 @@ use AL\PhpWndb\PartOfSpeechEnum;
 interface WordIndexMultiRepositoryInterface extends WordIndexRepositoryInterface
 {
 	/**
+	 * @return WordIndexInterface[]
+	 */
+	public function findAllWordIndices(string $lemma): array;
+
+	/**
 	 * @throws UnexpectedValueException
 	 */
 	public function findWordIndexByPartOfSpeech(PartOfSpeechEnum $partOfSpeech, string $lemma): ?WordIndexInterface;
