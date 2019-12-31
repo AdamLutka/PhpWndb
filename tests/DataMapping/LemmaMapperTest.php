@@ -18,6 +18,9 @@ class LemmaMapperTest extends BaseTestAbstract
 		static::assertSame($expectedToken, $mapper->lemmaToToken($lemma));
 	}
 
+	/**
+	 * @return array<array<string>>
+	 */
 	public function dpTestLemmaToToken(): array
 	{
 		return [
@@ -39,6 +42,9 @@ class LemmaMapperTest extends BaseTestAbstract
 		static::assertSame($expectedLemma, $mapper->tokenToLemma($token));
 	}
 
+	/**
+	 * @return array<array<string>>
+	 */
 	public function dpTestTokenToLemma(): array
 	{
 		return [

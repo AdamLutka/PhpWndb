@@ -31,6 +31,9 @@ class WordIndexParserTest extends BaseTestAbstract
 		$parser->parseWordIndex($wordIndex);
 	}
 
+	/**
+	 * @return array<string, array<string>>
+	 */
 	public function dpTestParseWordIndexInvalid(): array
 	{
 		return [

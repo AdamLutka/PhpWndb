@@ -8,7 +8,10 @@ use AL\PhpEnum\Enum;
 
 abstract class BaseTestAbstract extends TestCase
 {
-	public static function assertEnum(Enum $expectedEnum, $actualEnum, string $message = '')
+	/**
+	 * @param mixed $actualEnum
+	 */
+	public static function assertEnum(Enum $expectedEnum, $actualEnum, string $message = ''): void
 	{
 		static::assertInstanceOf(Enum::class, $actualEnum);
 		static::assertSame(

@@ -63,6 +63,9 @@ class SynsetDataParserTest extends BaseTestAbstract
 		$parser->parseSynsetData($synsetData);
 	}
 
+	/**
+	 * @return array<string, array<string>>
+	 */
 	public function dpTestParseSynsetDataInvalid(): array
 	{
 		return [
@@ -95,6 +98,9 @@ class SynsetDataParserTest extends BaseTestAbstract
 		return new SynsetDataParser();
 	}
 
+	/**
+	 * @param mixed $synset
+	 */
 	private static function assertSynset(
 		int $expectedSynsetOffset,
 		int $expectedLexFileNumber,
@@ -115,6 +121,9 @@ class SynsetDataParserTest extends BaseTestAbstract
 		static::assertCount($expectedFramesCount, $synset->getFrames());
 	}
 
+	/**
+	 * @param mixed $word
+	 */
 	private static function assertWord(string $expectedValue, int $expectedLexId, $word): void
 	{
 		static::assertInstanceOf(ParsedWordDataInterface::class, $word);
@@ -122,6 +131,9 @@ class SynsetDataParserTest extends BaseTestAbstract
 		static::assertSame($expectedLexId, $word->getLexId());
 	}
 
+	/**
+	 * @param mixed $pointer
+	 */
 	private static function assertPointer(
 		string $expectedPointerType,
 		int $expectedSynsetOffset,
@@ -138,6 +150,9 @@ class SynsetDataParserTest extends BaseTestAbstract
 		static::assertSame($expectedTargetWordIndex, $pointer->getTargetWordIndex());
 	}
 
+	/**
+	 * @param mixed $frame
+	 */
 	private static function assertFrame(int $expectedFrameNumber, int $expectedWordIndex, $frame): void
 	{
 		static::assertInstanceOf(ParsedFrameDataInterface::class, $frame);

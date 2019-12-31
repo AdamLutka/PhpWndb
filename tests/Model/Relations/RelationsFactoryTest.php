@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace AL\PhpWndb\Tests\Synsets\Relations;
+namespace AL\PhpWndb\Tests\Model\Relations;
 
 use AL\PhpWndb\Model\Relations\Relations;
 use AL\PhpWndb\Model\Relations\RelationPointerInterface;

@@ -24,14 +24,16 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^7.1",
-		"phpstan/phpstan": "^0.12.3"
+		"phpstan/phpstan": "^0.12.3",
+		"phpstan/phpstan-phpunit": "^0.12.3",
+		"phpstan/extension-installer": "^1.0"
 	},
 	"require": {
 		"adam-lutka/php-enum": "^1.0.2",
 		"php-di/php-di": "^6.0"
 	},
 	"scripts": {
-		"phpstan": "vendor/bin/phpstan analyse src/ --level=7",
+		"phpstan": "vendor/bin/phpstan analyse src/ tests/ --level=7",
 		"tests": "vendor/bin/phpunit"
 	}
 }

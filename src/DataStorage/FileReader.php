@@ -37,7 +37,8 @@ class FileReader implements FileReaderInterface
 
 		$lines = @file($this->filepath, FILE_SKIP_EMPTY_LINES | FILE_IGNORE_NEW_LINES);
 		if ($lines === false) {
-			throw new IOException("File ({$this->filepath}) read failed: " . error_get_last()['message']);
+			$lastError = error_get_last();
+			throw new IOException("File ({$this->filepath}) read failed: " . ($lastError ? $lastError['message'] : 'unknown error'));
 		}
 
 		return $lines;
@@ -103,6 +104,8 @@ class FileReader implements FileReaderInterface
 	 */
 	protected function seekFile(int $offset): void
 	{
+		assert(is_resource($this->handle));
+
 		$seeked = @fseek($this->handle, $offset);
 		if ($seeked < 0) {
 			throw new IOException("File ({$this->filepath}) seek failed: " . $this->getLastErrorMessage());
@@ -114,6 +117,8 @@ class FileReader implements FileReaderInterface
 	 */
 	protected function readFile(int $size): string
 	{
+		assert(is_resource($this->handle));
+
 		$result = @fread($this->handle, $size);
 		if ($result === false) {
 			throw new IOException("File ({$this->filepath}) read failed: " . $this->getLastErrorMessage());

@@ -19,6 +19,9 @@ class FileBinarySearcherTest extends BaseTestAbstract
 		static::assertSame($expectedResult, $searcher->searchFor($searchedRecordPrefix));
 	}
 
+	/**
+	 * @return array<array<?string>>
+	 */
 	public function dpTestSearchFor(): array
 	{
 		return [

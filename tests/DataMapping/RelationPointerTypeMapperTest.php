@@ -23,6 +23,9 @@ class RelationPointerTypeMapperTest extends BaseTestAbstract
 		static::assertEnum($expectedRelationPointerType, $mapper->tokenToRelationPointerType($token, $sourcePartOfSpeech));
 	}
 
+	/**
+	 * @return array<array<mixed>>
+	 */
 	public function dpTestTokenToRelationPointerType(): array
 	{
 		return [

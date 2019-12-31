@@ -8,26 +8,16 @@ use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
 use AL\PhpWndb\Model\Indexes\WordIndexFactory;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
+use AL\PhpWndb\Parsing\ParsedData\ParsedWordIndexInterface;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Tests\Fixtures\Parsing\ParsedIndexFixtures;
 use AL\PhpWndb\Tests\BaseTestAbstract;
 
 class WordIndexFactoryTest extends BaseTestAbstract
 {
-	/** @var ParsedIndexFixtures */
-	protected $fixtures;
-
-
-	public function setUp()
-	{
-		parent::setUp();
-		$this->fixtures = new ParsedIndexFixtures($this);
-	}
-
-
 	public function testCreateWordIndexFromParsedData(): void
 	{
-		$parsedData = $this->fixtures->createWordIndex('abstraction', 'n', ['@', '~'], [123, 345, 567]);
+		$parsedData = $this->createWordIndex('abstraction', 'n', ['@', '~'], [123, 345, 567]);
 		$wordIndex = $this->createFactory()->createWordIndexFromParsedData($parsedData);
 
 		static::assertSame('abstraction', $wordIndex->getLemma());
@@ -38,7 +28,7 @@ class WordIndexFactoryTest extends BaseTestAbstract
 
 	public function testCreateWordIndexFromParsedDataEmpty(): void
 	{
-		$parsedData = $this->fixtures->createWordIndex('do', 'v', [], []);
+		$parsedData = $this->createWordIndex('do', 'v', [], []);
 		$wordIndex = $this->createFactory()->createWordIndexFromParsedData($parsedData);
 
 		static::assertSame('do', $wordIndex->getLemma());
@@ -55,5 +45,24 @@ class WordIndexFactoryTest extends BaseTestAbstract
 			new PartOfSpeechMapper(),
 			new RelationPointerTypeMapper()
 		);
+	}
+
+	/**
+	 * @param string[] $relationPointerTypes
+	 * @param int[] $synsetOffsets
+	 */
+	protected function createWordIndex(
+		string $lemma,
+		string $partOfSpeech,
+		array $relationPointerTypes,
+		array $synsetOffsets
+	): ParsedWordIndexInterface {
+		$wordIndex = $this->createMock(ParsedWordIndexInterface::class);
+		$wordIndex->method('getLemma')->willReturn($lemma);
+		$wordIndex->method('getPartOfSpeech')->willReturn($partOfSpeech);
+		$wordIndex->method('getPointerTypes')->willReturn($relationPointerTypes);
+		$wordIndex->method('getSynsetOffsets')->willReturn($synsetOffsets);
+
+		return $wordIndex;
 	}
 }

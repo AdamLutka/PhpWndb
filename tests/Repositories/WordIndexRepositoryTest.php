@@ -40,9 +40,13 @@ class WordIndexRepositoryTest extends BaseTestAbstract
 		$repository = $this->createRepository($lemma);
 
 		$wordIndex1 = $repository->findWordIndex($lemma);
+
+		static::assertNotNull($wordIndex1);
+
 		$repository->dispose($wordIndex1);
 		$wordIndex2 = $repository->findWordIndex($lemma);
 
+		static::assertNotNull($wordIndex2);
 		static::assertNotSame($wordIndex1, $wordIndex2);
 	}
 

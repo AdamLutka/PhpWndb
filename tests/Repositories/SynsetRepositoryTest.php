@@ -80,7 +80,7 @@ class SynsetRepositoryTest extends BaseTestAbstract
 	public function testDispose(): void
 	{
 		$synsetOffset = 1000;
-		$repository = $this->createRepository($synsetOffset);
+		$repository = $this->createRepository();
 
 		$synset1 = $repository->getSynset($synsetOffset);
 		$repository->dispose($synset1);

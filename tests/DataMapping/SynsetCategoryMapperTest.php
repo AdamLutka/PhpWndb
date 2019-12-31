@@ -21,6 +21,9 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		static::assertEnum($expectedSynsetCategory, $mapper->mapSynsetAdjectivesCategory($data));
 	}
 
+	/**
+	 * @return array<array<mixed>>
+	 */
 	public function dpTestMapSynsetAdjectivesCategory(): array
 	{
 		return [
@@ -49,6 +52,9 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		static::assertEnum($expectedSynsetCategory, $mapper->mapSynsetAdverbsCategory($data));
 	}
 
+	/**
+	 * @return array<array<mixed>>
+	 */
 	public function dpTestMapSynsetAdverbsCategory(): array
 	{
 		return [
@@ -75,6 +81,9 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		static::assertEnum($expectedSynsetCategory, $mapper->mapSynsetNounsCategory($data));
 	}
 
+	/**
+	 * @return array<array<mixed>>
+	 */
 	public function dpTestMapSynsetNounsCategory(): array
 	{
 		return [
@@ -126,6 +135,9 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		static::assertEnum($expectedSynsetCategory, $mapper->mapSynsetVerbsCategory($data));
 	}
 
+	/**
+	 * @return array<array<mixed>>
+	 */
 	public function dpTestMapSynsetVerbsCategory(): array
 	{
 		return [

@@ -52,6 +52,9 @@ class MemoryConsumingWordIndexLoaderTest extends BaseTestAbstract
 	}
 
 
+	/**
+	 * @param array<mixed> $data
+	 */
 	private function createLoader(array $data): MemoryConsumingWordIndexLoader
 	{
 		$reader = $this->createMock(FileReaderInterface::class);

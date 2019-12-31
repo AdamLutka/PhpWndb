@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace AL\PhpWndb\Tests\Synsets\Words;
+namespace AL\PhpWndb\Tests\Model\Words;
 
 use AL\PhpWndb\Model\Relations\RelationsInterface;
 use AL\PhpWndb\Tests\BaseTestAbstract;

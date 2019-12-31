@@ -94,6 +94,9 @@ class MemoryConsumingSynsetDataLoaderTest extends BaseTestAbstract
 	}
 
 
+	/**
+	 * @param array<mixed> $data
+	 */
 	private function createLoader(array $data): MemoryConsumingSynsetDataLoader
 	{
 		$loader = $this->createMock(FileReaderInterface::class);

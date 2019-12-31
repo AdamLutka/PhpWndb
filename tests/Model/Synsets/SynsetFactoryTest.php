@@ -14,52 +14,56 @@ use AL\PhpWndb\Model\Relations\RelationPointerInterface;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
 use AL\PhpWndb\Model\Relations\RelationsFactory;
 use AL\PhpWndb\Model\Synsets\Nouns\SynsetNounsCategoryEnum;
+use AL\PhpWndb\Model\Synsets\Nouns\SynsetNounsInterface;
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
 use AL\PhpWndb\Model\Synsets\SynsetFactory;
 use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbsCategoryEnum;
+use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbsInterface;
+use AL\PhpWndb\Model\Words\VerbInterface;
 use AL\PhpWndb\Model\Words\WordFactory;
 use AL\PhpWndb\Model\Words\WordInterface;
+use AL\PhpWndb\Parsing\ParsedData\ParsedFrameDataInterface;
+use AL\PhpWndb\Parsing\ParsedData\ParsedPointerDataInterface;
+use AL\PhpWndb\Parsing\ParsedData\ParsedSynsetDataInterface;
+use AL\PhpWndb\Parsing\ParsedData\ParsedWordDataInterface;
 use AL\PhpWndb\Tests\BaseTestAbstract;
-use AL\PhpWndb\Tests\Fixtures\Parsing\ParsedDataFixtures;
 
 class SynsetFactoryTest extends BaseTestAbstract
 {
-	/** @var ParsedDataFixtures */
-	protected $fixtures;
-
-
-	public function setUp()
-	{
-		parent::setUp();
-		$this->fixtures = new ParsedDataFixtures($this);
-	}
-
-
 	public function testCreateSynsetFromParsedData(): void
 	{
 		$wordsData = [
-			$this->fixtures->createWordData('word_1', 1),
-			$this->fixtures->createWordData('word_2', 2),
-			$this->fixtures->createWordData('word_3', 3),
+			$this->createWordData('word_1', 1),
+			$this->createWordData('word_2', 2),
+			$this->createWordData('word_3', 3),
 		];
 		$pointersData = [
-			$this->fixtures->createPointerData('@', 11, 'v', 1, 2),
-			$this->fixtures->createPointerData('!', 22, 'a', 0, 0),
-			$this->fixtures->createPointerData('~', 33, 'v', 1, 0),
+			$this->createPointerData('@', 11, 'v', 1, 2),
+			$this->createPointerData('!', 22, 'a', 0, 0),
+			$this->createPointerData('~', 33, 'v', 1, 0),
 		];
 		$framesData = [
-			$this->fixtures->createFrameData(33, 0),
-			$this->fixtures->createFrameData(1, 2),
-			$this->fixtures->createFrameData(2, 2),
+			$this->createFrameData(33, 0),
+			$this->createFrameData(1, 2),
+			$this->createFrameData(2, 2),
 		];
-		$synsetData = $this->fixtures->createSynsetData(135, 43, 'v', 'gloss', $wordsData, $pointersData, $framesData);
+		$synsetData = $this->createSynsetData(135, 43, 'v', 'gloss', $wordsData, $pointersData, $framesData);
 
 		$factory = $this->createFactory();
 		$synset = $factory->createSynsetFromParsedData($synsetData);
 
-		static::assertSynset(135, 'gloss', SynsetVerbsCategoryEnum::WEATHER(), 3, $synset);
+		static::assertInstanceOf(SynsetVerbsInterface::class, $synset);
+		static::assertSame(135, $synset->getSynsetOffset());
+		static::assertSame('gloss', $synset->getGloss());
+		static::assertEnum(SynsetVerbsCategoryEnum::WEATHER(), $synset->getSynsetCategory());
+		static::assertCount(3, $synset->getWords());
 
 		$words = $synset->getWords();
+
+		static::assertInstanceOf(VerbInterface::class, $words[0]);
+		static::assertInstanceOf(VerbInterface::class, $words[1]);
+		static::assertInstanceOf(VerbInterface::class, $words[2]);
+
 		static::assertWord('word 1', 1, 3, $words[0]);
 		static::assertWord('word 2', 2, 1, $words[1]);
 		static::assertWord('word 3', 3, 1, $words[2]);
@@ -82,12 +86,17 @@ class SynsetFactoryTest extends BaseTestAbstract
 
 	public function testEmptySynset(): void
 	{
-		$synsetData = $this->fixtures->createSynsetData(1248, 22, 'n', 'nouns', [], [], []);
+		$synsetData = $this->createSynsetData(1248, 22, 'n', 'nouns', [], [], []);
 
 		$factory = $this->createFactory();
 		$synset = $factory->createSynsetFromParsedData($synsetData);
 
-		static::assertSynset(1248, 'nouns', SynsetNounsCategoryEnum::PROCESS(), 0, $synset);
+		static::assertInstanceOf(SynsetNounsInterface::class, $synset);
+		static::assertSame(1248, $synset->getSynsetOffset());
+		static::assertSame('nouns', $synset->getGloss());
+		static::assertEnum(SynsetNounsCategoryEnum::PROCESS(), $synset->getSynsetCategory());
+		static::assertCount(0, $synset->getWords());
+
 	}
 
 	/**
@@ -97,9 +106,9 @@ class SynsetFactoryTest extends BaseTestAbstract
 	public function testAdverbWithFrames(): void
 	{
 		$framesData = [
-			$this->fixtures->createFrameData(23, 0),
+			$this->createFrameData(23, 0),
 		];
-		$synsetData = $this->fixtures->createSynsetData(135, 2, 'r', 'gloss', [], [], $framesData);
+		$synsetData = $this->createSynsetData(135, 2, 'r', 'gloss', [], [], $framesData);
 
 		$factory = $this->createFactory();
 		$factory->createSynsetFromParsedData($synsetData);
@@ -112,9 +121,9 @@ class SynsetFactoryTest extends BaseTestAbstract
 	public function testInvalidPointer(): void
 	{
 		$pointersData = [
-			$this->fixtures->createPointerData('@', 123, 'v', 1, 0),
+			$this->createPointerData('@', 123, 'v', 1, 0),
 		];
-		$synsetData = $this->fixtures->createSynsetData(135, 2, 'r', 'gloss', [], $pointersData, []);
+		$synsetData = $this->createSynsetData(135, 2, 'r', 'gloss', [], $pointersData, []);
 
 		$factory = $this->createFactory();
 		$factory->createSynsetFromParsedData($synsetData);
@@ -134,21 +143,71 @@ class SynsetFactoryTest extends BaseTestAbstract
 		);
 	}
 
+	protected function createWordData(string $value, int $lexId): ParsedWordDataInterface
+	{
+		$mock = $this->createMock(ParsedWordDataInterface::class);
+		$mock->method('getValue')->willReturn($value);
+		$mock->method('getLexId')->willReturn($lexId);
 
-	protected static function assertSynset(
-		int $expectedSynsetOffset,
-		string $expectedGloss,
-		Enum $expectedSynsetCategory,
-		int $expectedWordsCount,
-		$synset
-	): void {
-		static::assertInstanceOf(SynsetInterface::class, $synset);
-		static::assertSame($expectedSynsetOffset, $synset->getSynsetOffset());
-		static::assertSame($expectedGloss, $synset->getGloss());
-		static::assertEnum($expectedSynsetCategory, $synset->getSynsetCategory());
-		static::assertCount($expectedWordsCount, $synset->getWords());
+		return $mock;
 	}
 
+	protected function createPointerData(
+		string $pointerType,
+		int $synsetOffset,
+		string $partOfSpeech,
+		int $sourceWordIndex,
+		int $targetWordIndex
+	): ParsedPointerDataInterface {
+		$mock = $this->createMock(ParsedPointerDataInterface::class);
+		$mock->method('getPointerType')->willReturn($pointerType);
+		$mock->method('getSynsetOffset')->willReturn($synsetOffset);
+		$mock->method('getPartOfSpeech')->willReturn($partOfSpeech);
+		$mock->method('getSourceWordIndex')->willReturn($sourceWordIndex);
+		$mock->method('getTargetWordIndex')->willReturn($targetWordIndex);
+
+		return $mock;
+	}
+
+	protected function createFrameData(int $frameNumber, int $wordIndex): ParsedFrameDataInterface
+	{
+		$mock = $this->createMock(ParsedFrameDataInterface::class);
+		$mock->method('getFrameNumber')->willReturn($frameNumber);
+		$mock->method('getWordIndex')->willReturn($wordIndex);
+
+		return $mock;
+	}
+
+	/**
+	 * @param ParsedWordDataInterface[] $words
+	 * @param ParsedPointerDataInterface[] $pointers
+	 * @param ParsedFrameDataInterface[] $frames
+	 */
+	protected function createSynsetData(
+		int $synsetOffset,
+		int $lexFileNumber,
+		string $partOfSpeech,
+		string $gloss,
+		array $words,
+		array $pointers,
+		array $frames
+	): ParsedSynsetDataInterface {
+		$mock = $this->createMock(ParsedSynsetDataInterface::class);
+		$mock->method('getSynsetOffset')->willReturn($synsetOffset);
+		$mock->method('getLexFileNumber')->willReturn($lexFileNumber);
+		$mock->method('getPartOfSpeech')->willReturn($partOfSpeech);
+		$mock->method('getGloss')->willReturn($gloss);
+		$mock->method('getWords')->willReturn($words);
+		$mock->method('getPointers')->willReturn($pointers);
+		$mock->method('getFrames')->willReturn($frames);
+
+		return $mock;
+	}
+
+
+	/**
+	 * @param mixed $word
+	 */
 	protected static function assertWord(
 		string $expectedLemma,
 		int $expectedLexId,
@@ -161,6 +220,9 @@ class SynsetFactoryTest extends BaseTestAbstract
 		static::assertCount($expectedRelatedCount, $word->getAllRelated());
 	}
 
+	/**
+	 * @param mixed $pointer
+	 */
 	protected static function assertRelationPointer(
 		RelationPointerTypeEnum $expectedPointerType,
 		PartOfSpeechEnum $expectedPartOfSpeech,

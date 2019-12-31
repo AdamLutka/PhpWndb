@@ -55,6 +55,7 @@ class SynsetMultiRepositoryTest extends BaseTestAbstract
 		$repository = $this->createMultiRepository();
 		$synset = $repository->findSynsetByPartOfSpeech($partOfSpeech, 1000);
 
+		static::assertNotNull($synset);
 		static::assertEnum($partOfSpeech, $synset->getPartOfSpeech());
 	}
 
@@ -108,6 +109,9 @@ class SynsetMultiRepositoryTest extends BaseTestAbstract
 	}
 
 
+	/**
+	 * @return array<array<PartOfSpeechEnum>>
+	 */
 	public function dpPartOfSpeeches(): array
 	{
 		return [

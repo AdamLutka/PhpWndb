@@ -19,6 +19,9 @@ class PartOfSpeechMapperTest extends BaseTestAbstract
 		static::assertEnum($expectedPartOfSpeech, $mapper->tokenToPartOfSpeech($token));
 	}
 
+	/**
+	 * @return array<array<mixed>>
+	 */
 	public function dpTestTokenToPartOfSpeech(): array
 	{
 		return [

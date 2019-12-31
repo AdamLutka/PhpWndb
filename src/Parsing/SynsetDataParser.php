@@ -48,7 +48,7 @@ class SynsetDataParser implements SynsetDataParserInterface
 			throw new InvalidArgumentException('Gloss is missing.');
 		}
 
-		$tokens = explode(' ', trim($data));
+		$tokens = explode(' ', trim((string)$data));
 		$this->tokensQueue = new TokensQueue($tokens);
 		$this->parsedData = new ParsedSynsetData();
 		$this->parsedData->setGloss(trim($gloss));
