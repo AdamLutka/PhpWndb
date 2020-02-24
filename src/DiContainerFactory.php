@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb;
 
+use AL\PhpWndb\Cache\CacheInterface;
+use AL\PhpWndb\Cache\MemoryCache;
 use AL\PhpWndb\DataMapping\LemmaMapper;
 use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
@@ -95,6 +97,8 @@ class DiContainerFactory
 			'sizes.readBlock.synset'    => 16 * 1024,  // 16 KiB
 			'sizes.readBlock.wordIndex' => 256 * 1024, // 256 KiB
 
+			'cache.memory.maxItemsCount' => 100,
+
 			'format.wordIndex.recordSeparator'       => "\n",
 			'format.wordIndex.recordPrefixSeparator' => ' ',
 		];
@@ -106,8 +110,11 @@ class DiContainerFactory
 	protected function createServices(): array
 	{
 		return [
+			// Cache
+			CacheInterface::class => create(MemoryCache::class)->constructor(get('cache.memory.maxItemsCount')),
+
 			// Data mappers
-			LemmaMapperInterface::class => create(LemmaMapper::class),
+			LemmaMapperInterface::class => autowire(LemmaMapper::class),
 			PartOfSpeechMapperInterface::class => create(PartOfSpeechMapper::class),
 			RelationPointerTypeMapperInterface::class => create(RelationPointerTypeMapper::class),
 			SynsetCategoryMapperInterface::class => create(SynsetCategoryMapper::class),

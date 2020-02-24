@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Tests\Model\Indexes;
 
+use AL\PhpWndb\Cache\CacheInterface;
 use AL\PhpWndb\DataMapping\LemmaMapper;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
@@ -41,7 +42,7 @@ class WordIndexFactoryTest extends BaseTestAbstract
 	protected function createFactory(): WordIndexFactory
 	{
 		return new WordIndexFactory(
-			new LemmaMapper(),
+			new LemmaMapper($this->createMock(CacheInterface::class)),
 			new PartOfSpeechMapper(),
 			new RelationPointerTypeMapper()
 		);

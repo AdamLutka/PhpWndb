@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Tests\DataMapping;
 
+use AL\PhpWndb\Cache\CacheInterface;
 use AL\PhpWndb\DataMapping\LemmaMapper;
 use AL\PhpWndb\Tests\BaseTestAbstract;
 
@@ -13,7 +14,7 @@ class LemmaMapperTest extends BaseTestAbstract
 	 */
 	public function testLemmaToToken(string $expectedToken, string $lemma): void
 	{
-		$mapper = new LemmaMapper();
+		$mapper = $this->createLemmaMapper();
 
 		static::assertSame($expectedToken, $mapper->lemmaToToken($lemma));
 	}
@@ -37,7 +38,7 @@ class LemmaMapperTest extends BaseTestAbstract
 	 */
 	public function testTokenToLemma(string $expectedLemma, string $token): void
 	{
-		$mapper = new LemmaMapper();
+		$mapper = $this->createLemmaMapper();
 
 		static::assertSame($expectedLemma, $mapper->tokenToLemma($token));
 	}
@@ -53,5 +54,11 @@ class LemmaMapperTest extends BaseTestAbstract
 			['a b c', 'a_b_c'],
 			['123', '123'],
 		];
+	}
+
+
+	private function createLemmaMapper(): LemmaMapper
+	{
+		return new LemmaMapper($this->createMock(CacheInterface::class));
 	}
 }

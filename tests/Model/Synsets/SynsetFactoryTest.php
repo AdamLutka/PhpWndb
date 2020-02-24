@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests\Model\Synsets;
 
 use AL\PhpEnum\Enum;
+use AL\PhpWndb\Cache\CacheInterface;
 use AL\PhpWndb\DataMapping\LemmaMapper;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
@@ -136,7 +137,7 @@ class SynsetFactoryTest extends BaseTestAbstract
 			new SynsetCategoryMapper(),
 			new PartOfSpeechMapper(),
 			new RelationPointerTypeMapper(),
-			new LemmaMapper(),
+			new LemmaMapper($this->createMock(CacheInterface::class)),
 			new RelationsFactory(),
 			new RelationPointerFactory(),
 			new WordFactory()
