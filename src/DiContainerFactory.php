@@ -23,6 +23,8 @@ use AL\PhpWndb\Model\Relations\RelationPointerFactory;
 use AL\PhpWndb\Model\Relations\RelationPointerFactoryInterface;
 use AL\PhpWndb\Model\Relations\RelationsFactory;
 use AL\PhpWndb\Model\Relations\RelationsFactoryInterface;
+use AL\PhpWndb\Model\Synsets\Collections\SynsetCollectionFactory;
+use AL\PhpWndb\Model\Synsets\Collections\SynsetCollectionFactoryInterface;
 use AL\PhpWndb\Model\Synsets\SynsetFactory;
 use AL\PhpWndb\Model\Synsets\SynsetFactoryInterface;
 use AL\PhpWndb\Model\Words\WordFactory;
@@ -202,6 +204,7 @@ class DiContainerFactory
 				},
 
 			// ...
+			SynsetCollectionFactoryInterface::class => autowire(SynsetCollectionFactory::class),
 			SynsetDataParserInterface::class => create(SynsetDataParser::class),
 			RelationsFactoryInterface::class => create(RelationsFactory::class),
 			RelationPointerFactoryInterface::class => create(RelationPointerFactory::class),

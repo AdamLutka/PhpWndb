@@ -22,19 +22,38 @@ class IntegrationTest extends BaseTestAbstract
 	}
 
 
-	public function testSearchLemma(): void
+	public function testSearchSynsets(): void
 	{
-		$synsets = $this->wordNet->searchLemma('love');
-		
-		$actualSynsetOffsets = array_map(function ($synset) {
+		$synsetCollection = $this->wordNet->searchSynsets('love');
+
+		$verbs = $synsetCollection->getSynsetVerbs();
+		$nouns = $synsetCollection->getSynsetNouns();
+
+		$verbOffsets = $this->synsetsToOffsets($verbs);
+		$nounOffsets = $this->synsetsToOffsets($nouns);
+
+		$expectedVerbOffsets = [1779085, 1832678, 1779456, 1429048];
+		$expectedNounOffsets = [848145, 7558676, 5821331, 9869006, 7503480, 13617812];
+
+		sort($verbOffsets);
+		sort($expectedVerbOffsets);
+		sort($nounOffsets);
+		sort($expectedNounOffsets);
+
+		static::assertSame($expectedVerbOffsets, $verbOffsets);
+		static::assertSame($expectedNounOffsets, $nounOffsets);
+	}
+
+
+	/**
+	 * @param array<mixed> $synsets
+	 * @return int[]
+	 */
+	private function synsetsToOffsets(array $synsets): array
+	{
+		return array_map(function ($synset) {
 			static::assertInstanceOf(SynsetInterface::class, $synset);
 			return $synset->getSynsetOffset();
 		}, $synsets);
-		$expectedSynsetOffsets = [7558676, 5821331, 9869006, 7503480, 13617812, 848145, 1779085, 1832678, 1779456, 1429048];
-
-		sort($actualSynsetOffsets);
-		sort($expectedSynsetOffsets);
-
-		static::assertSame($expectedSynsetOffsets, $actualSynsetOffsets);
 	}
 }

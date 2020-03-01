@@ -12,7 +12,7 @@ $container = $containerFactory->createContainer();
 /** @var WordNet */
 $wordNet = $container->get(WordNet::class);
 
-$synsets = $wordNet->searchLemma('cat');
+$synsets = $wordNet->searchSynsets('cat')->getAllSynsets();
 
 foreach ($synsets as $synset) {
 	echo "  " . $synset->getGloss() . "\n";

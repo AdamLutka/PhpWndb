@@ -3,42 +3,45 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb;
 
-use AL\PhpWndb\Model\Synsets\SynsetInterface;
-use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
+use AL\PhpWndb\Model\Synsets\Collections\SynsetCollectionInterface;
+use AL\PhpWndb\Model\Synsets\Collections\SynsetCollectionFactoryInterface;
 use AL\PhpWndb\Repositories\WordIndexMultiRepositoryInterface;
 
 class WordNet
 {
-	/** @var SynsetMultiRepositoryInterface */
-	protected $synsetRepository;
+	/** @var SynsetCollectionFactoryInterface */
+	protected $synsetCollectionFactory;
 
 	/** @var WordIndexMultiRepositoryInterface */
 	protected $wordIndexRepository;
 
 
-	public function __construct(SynsetMultiRepositoryInterface $synsetRepository, WordIndexMultiRepositoryInterface $wordIndexRepository)
+	public function __construct(SynsetCollectionFactoryInterface $synsetCollectionFactory, WordIndexMultiRepositoryInterface $wordIndexRepository)
 	{
-		$this->synsetRepository = $synsetRepository;
+		$this->synsetCollectionFactory = $synsetCollectionFactory;
 		$this->wordIndexRepository = $wordIndexRepository;
 	}
 
 
-	/**
-	 * @return SynsetInterface[]
-	 */
-	public function searchLemma(string $lemma): array
+	public function searchSynsets(string $lemma): SynsetCollectionInterface
 	{
-		$synsets = [];
 		$wordIndices = $this->wordIndexRepository->findAllWordIndices($lemma);
+		$offsets = [
+			(string)PartOfSpeechEnum::ADJECTIVE() => [],
+			(string)PartOfSpeechEnum::ADVERB() => [],
+			(string)PartOfSpeechEnum::NOUN() => [],
+			(string)PartOfSpeechEnum::VERB() => [],
+		];
 
 		foreach ($wordIndices as $wordIndex) {
-			$partOfSpeech = $wordIndex->getPartOfSpeech();
-
-			foreach ($wordIndex->getSynsetOffsets() as $synsetOffset) {
-				$synsets[] = $this->synsetRepository->getSynsetByPartOfSpeech($partOfSpeech, $synsetOffset);
-			}
+			$offsets[(string)$wordIndex->getPartOfSpeech()] = $wordIndex->getSynsetOffsets();
 		}
 
-		return $synsets;
+		return $this->synsetCollectionFactory->createSynsetCollection(
+			$offsets[(string)PartOfSpeechEnum::ADJECTIVE()],
+			$offsets[(string)PartOfSpeechEnum::ADVERB()],
+			$offsets[(string)PartOfSpeechEnum::NOUN()],
+			$offsets[(string)PartOfSpeechEnum::VERB()]
+		);
 	}
 }

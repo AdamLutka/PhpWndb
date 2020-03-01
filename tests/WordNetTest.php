@@ -4,60 +4,67 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests;
 
 use AL\PhpWndb\Model\Indexes\WordIndexInterface;
-use AL\PhpWndb\Model\Synsets\SynsetInterface;
+use AL\PhpWndb\Model\Synsets\Collections\SynsetCollectionFactoryInterface;
 use AL\PhpWndb\PartOfSpeechEnum;
-use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
 use AL\PhpWndb\Repositories\WordIndexMultiRepositoryInterface;
 use AL\PhpWndb\WordNet;
 
 class WordNetTest extends BaseTestAbstract
 {
-	public function testSearchLemmaFound(): void
+	public function testSearchSynsetsFound(): void
 	{
-		$wordNet = $this->createWordNet([111, 122, 123]);
-		$synsets = $wordNet->searchLemma('cat');
+		$wordIndexNoun = $this->createMock(WordIndexInterface::class);
+		$wordIndexNoun->method('getSynsetOffsets')->willReturn([1, 2]);
+		$wordIndexNoun->method('getPartOfSpeech')->willReturn(PartOfSpeechEnum::NOUN());
 
-		static::assertCount(3, $synsets);
-		static::assertSame(111, $synsets[0]->getSynsetOffset());
-		static::assertSame(122, $synsets[1]->getSynsetOffset());
-		static::assertSame(123, $synsets[2]->getSynsetOffset());
-	}
+		$wordIndexVerb = $this->createMock(WordIndexInterface::class);
+		$wordIndexVerb->method('getSynsetOffsets')->willReturn([10, 20]);
+		$wordIndexVerb->method('getPartOfSpeech')->willReturn(PartOfSpeechEnum::VERB());
 
-	public function testSearchLemmaNotFound(): void
-	{
-		$wordNet = $this->createWordNet(null);
-		static::assertSame([], $wordNet->searchLemma('cat'));
-	}
+		$wordIndexAdverb = $this->createMock(WordIndexInterface::class);
+		$wordIndexAdverb->method('getSynsetOffsets')->willReturn([100, 200]);
+		$wordIndexAdverb->method('getPartOfSpeech')->willReturn(PartOfSpeechEnum::ADVERB());
 
+		$wordIndexAdjective = $this->createMock(WordIndexInterface::class);
+		$wordIndexAdjective->method('getSynsetOffsets')->willReturn([1000, 2000]);
+		$wordIndexAdjective->method('getPartOfSpeech')->willReturn(PartOfSpeechEnum::ADJECTIVE());
 
-	/**
-	 * @param int[]|null $synsetOffsets
-	 */
-	private function createWordNet(?array $synsetOffsets): WordNet
-	{
-		$synsetRepository = $this->createMock(SynsetMultiRepositoryInterface::class);
 		$wordIndexRepository = $this->createMock(WordIndexMultiRepositoryInterface::class);
+		$wordIndexRepository->method('findAllWordIndices')->willReturn([
+			$wordIndexNoun,
+			$wordIndexVerb,
+			$wordIndexAdverb,
+			$wordIndexAdjective
+		]);
 
-		if ($synsetOffsets !== null) {
-			$wordIndex = $this->createMock(WordIndexInterface::class);
-			$wordIndex->method('getSynsetOffsets')->willReturn($synsetOffsets);
-			$wordIndex->method('getPartOfSpeech')->willReturn(PartOfSpeechEnum::NOUN());
+		$synsetCollectionFactory = $this->createMock(SynsetCollectionFactoryInterface::class);
+		$synsetCollectionFactory->expects($this->once())->method('createSynsetCollection')->with(
+			static::equalTo([1000, 2000]),
+			static::equalTo([100, 200]),
+			static::equalTo([1, 2]),
+			static::equalTo([10, 20])
+		);
 
-			$valueMap = array_map(function (int $synsetOffset): array {
-				$synset = $this->createMock(SynsetInterface::class);
-				$synset->method('getSynsetOffset')->willReturn($synsetOffset);
 
-				return [PartOfSpeechEnum::NOUN(), $synsetOffset, $synset];
-			}, $synsetOffsets);
+		$wordNet = new WordNet($synsetCollectionFactory, $wordIndexRepository);
+		$synsets = $wordNet->searchSynsets('lemma');
+	}
 
-			$synsetRepository->method('getSynsetByPartOfSpeech')->will($this->returnValueMap($valueMap));
-		}
-		else {
-			$wordIndex = null;
-		}
+	public function testSearchSynsetsNotFound(): void
+	{
+		$wordIndexRepository = $this->createMock(WordIndexMultiRepositoryInterface::class);
+		$wordIndexRepository->method('findAllWordIndices')->willReturn([]);
 
-		$wordIndexRepository->method('findAllWordIndices')->willReturn($wordIndex ? [$wordIndex] : []);
+		$synsetCollectionFactory = $this->createMock(SynsetCollectionFactoryInterface::class);
+		$synsetCollectionFactory->expects($this->once())->method('createSynsetCollection')->with(
+			static::equalTo([]),
+			static::equalTo([]),
+			static::equalTo([]),
+			static::equalTo([])
+		);
 
-		return new WordNet($synsetRepository, $wordIndexRepository);
+
+		$wordNet = new WordNet($synsetCollectionFactory, $wordIndexRepository);
+		$synsets = $wordNet->searchSynsets('lemma');
 	}
 }
