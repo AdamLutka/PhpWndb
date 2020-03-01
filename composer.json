@@ -19,6 +19,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
+			"AL\\PhpWndb\\Examples\\": "examples/",
 			"AL\\PhpWndb\\Tests\\": "tests/"
 		}
 	},
@@ -33,7 +34,7 @@
 		"php-di/php-di": "^6.0"
 	},
 	"scripts": {
-		"phpstan": "vendor/bin/phpstan analyse src/ tests/ --level=7",
+		"phpstan": "vendor/bin/phpstan analyse src/ tests/ examples/ --level=max",
 		"tests": "vendor/bin/phpunit"
 	}
 }
