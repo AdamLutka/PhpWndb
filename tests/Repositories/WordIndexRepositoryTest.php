@@ -51,7 +51,7 @@ class WordIndexRepositoryTest extends BaseTestAbstract
 	}
 
 
-	protected function createRepository(?string $lemma = null): WordIndexRepository
+	protected function createRepository(string $lemma = ''): WordIndexRepository
 	{
 		$lemmaMapper = $this->createMock(LemmaMapperInterface::class);
 		$lemmaMapper->method('lemmaToToken')->willReturnCallback(function ($lemma) {

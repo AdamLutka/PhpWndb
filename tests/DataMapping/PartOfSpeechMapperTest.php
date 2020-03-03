@@ -6,6 +6,7 @@ namespace AL\PhpWndb\Tests\DataMapping;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use UnexpectedValueException;
 
 class PartOfSpeechMapperTest extends BaseTestAbstract
 {
@@ -33,11 +34,10 @@ class PartOfSpeechMapperTest extends BaseTestAbstract
 		];
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 */
 	public function testTokenToPartOfSpeechUnknown(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+
 		$mapper = new PartOfSpeechMapper();
 		$mapper->tokenToPartOfSpeech('not_exist');
 	}

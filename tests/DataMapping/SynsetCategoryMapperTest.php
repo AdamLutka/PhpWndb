@@ -9,6 +9,7 @@ use AL\PhpWndb\Model\Synsets\Adverbs\SynsetAdverbsCategoryEnum;
 use AL\PhpWndb\Model\Synsets\Nouns\SynsetNounsCategoryEnum;
 use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbsCategoryEnum;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use UnexpectedValueException;
 
 class SynsetCategoryMapperTest extends BaseTestAbstract
 {
@@ -33,11 +34,10 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		];
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 */
 	public function testMapSynsetAdjectivesCategoryUnknown(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+
 		$mapper = new SynsetCategoryMapper();
 		$mapper->mapSynsetAdjectivesCategory(1000);
 	}
@@ -62,11 +62,10 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		];
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 */
 	public function testMapSynsetAdverbsCategoryUnknown(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+
 		$mapper = new SynsetCategoryMapper();
 		$mapper->mapSynsetAdverbsCategory(1000);
 	}
@@ -116,11 +115,10 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		];
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 */
 	public function testMapSynsetNounsCategoryUnknown(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+
 		$mapper = new SynsetCategoryMapper();
 		$mapper->mapSynsetNounsCategory(1000);
 	}
@@ -159,11 +157,10 @@ class SynsetCategoryMapperTest extends BaseTestAbstract
 		];
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 */
 	public function testMapSynsetVerbsCategoryUnknown(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+
 		$mapper = new SynsetCategoryMapper();
 		$mapper->mapSynsetVerbsCategory(1000);
 	}

@@ -5,6 +5,7 @@ namespace AL\PhpWndb\Tests\Parsing;
 
 use AL\PhpWndb\Parsing\TokensQueue;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use InvalidArgumentException;
 
 class TokensQueueTest extends BaseTestAbstract
 {
@@ -20,32 +21,29 @@ class TokensQueueTest extends BaseTestAbstract
 		static::assertSame(0, $queue->getCount());
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage No tokens left.
-	 */
 	public function testEmptyQueue(): void
 	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('No tokens left.');
+
 		$queue = new TokensQueue([]);
 		$queue->takeOutString();
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Decimal integer expected:
-	 */
 	public function testInvalidDecInt(): void
 	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('Decimal integer expected:');
+
 		$queue = new TokensQueue(['foo']);
 		$queue->takeOutDecInt();
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Hexadecimal integer expected:
-	 */
 	public function testInvalidHexInt(): void
 	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('Hexadecimal integer expected:');
+
 		$queue = new TokensQueue(['foo']);
 		$queue->takeOutHexInt();
 	}

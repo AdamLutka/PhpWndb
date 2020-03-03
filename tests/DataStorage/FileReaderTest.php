@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Tests\DataStorage;
 
+use AL\PhpWndb\Exceptions\IOException;
 use AL\PhpWndb\DataStorage\FileReader;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use InvalidArgumentException;
 
 class FileReaderTest extends BaseTestAbstract
 {
@@ -20,11 +22,10 @@ class FileReaderTest extends BaseTestAbstract
 		], $reader->readAll());
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\IOException
-	 */
 	public function testReadAllNotExist(): void
 	{
+		$this->expectException(IOException::class);
+
 		$reader = new FileReader(__DIR__ . '/FileReaderTest.not_exist');
 		$reader->readAll();
 	}
@@ -38,29 +39,26 @@ class FileReaderTest extends BaseTestAbstract
 		static::assertSame('a12', $reader->readBlock(0, 3));
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\IOException
-	 */
 	public function testReadBlockNotExist(): void
 	{
+		$this->expectException(IOException::class);
+
 		$reader = new FileReader(__DIR__ . '/FileReaderTest.not_exist');
 		$reader->readAll();
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testReadBlockInvalidOffset(): void
 	{
+		$this->expectException(InvalidArgumentException::class);
+
 		$reader = $this->createReader();
 		$reader->readBlock(-1, 10);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testReadBlockInvalidSize(): void
 	{
+		$this->expectException(InvalidArgumentException::class);
+
 		$reader = $this->createReader();
 		$reader->readBlock(0, 0);
 	}
@@ -73,11 +71,10 @@ class FileReaderTest extends BaseTestAbstract
 		static::assertSame(19, $reader->getFileSize());
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\IOException
-	 */
 	public function testGetFileSizeNotExist(): void
 	{
+		$this->expectException(IOException::class);
+
 		$reader = new FileReader(__DIR__ . '/FileReaderTest.not_exist');
 		$reader->getFileSize();
 	}

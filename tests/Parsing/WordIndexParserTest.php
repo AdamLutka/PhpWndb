@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Tests\Parsing;
 
+use AL\PhpWndb\Parsing\Exceptions\WordIndexParseException;
 use AL\PhpWndb\Parsing\WordIndexParser;
 use AL\PhpWndb\Tests\BaseTestAbstract;
 
@@ -22,11 +23,12 @@ class WordIndexParserTest extends BaseTestAbstract
 
 	
 	/**
-	 * @expectedException \AL\PhpWndb\Parsing\Exceptions\WordIndexParseException
 	 * @dataProvider dpTestParseWordIndexInvalid
 	 */
 	public function testParseWordIndexInvalid(string $wordIndex): void
 	{
+		$this->expectException(WordIndexParseException::class);
+
 		$parser = $this->createParser();
 		$parser->parseWordIndex($wordIndex);
 	}

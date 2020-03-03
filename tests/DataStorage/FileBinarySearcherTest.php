@@ -6,6 +6,7 @@ namespace AL\PhpWndb\Tests\DataStorage;
 use AL\PhpWndb\DataStorage\FileReader;
 use AL\PhpWndb\DataStorage\FileBinarySearcher;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use InvalidArgumentException;
 
 class FileBinarySearcherTest extends BaseTestAbstract
 {
@@ -34,12 +35,11 @@ class FileBinarySearcherTest extends BaseTestAbstract
 	}
 
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Record prefix has to be non empty.
-	 */
 	public function testFindLemmaIndexDataEmptyInput(): void
 	{
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('Record prefix has to be non empty.');
+
 		$searcher = $this->createSearcher();
 		$searcher->searchFor('');
 	}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests\Repositories;
 
 use AL\PhpWndb\DataStorage\SynsetDataLoaderInterface;
+use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 use AL\PhpWndb\Model\Synsets\SynsetFactoryInterface;
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
 use AL\PhpWndb\Parsing\SynsetDataParserInterface;
@@ -67,11 +68,10 @@ class SynsetRepositoryTest extends BaseTestAbstract
 		static::assertNotSame($synset1, $synset2);
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\UnknownSynsetOffsetException
-	 */
 	public function testGetSynsetUnknown(): void
 	{
+		$this->expectException(UnknownSynsetOffsetException::class);
+
 		$repository = $this->createRepository();
 		$synset = $repository->getSynset(-100);
 	}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace AL\PhpWndb\Tests\Parsing;
 
 use AL\PhpWndb\DataMapping\LemmaMapperInterface;
+use AL\PhpWndb\Parsing\Exceptions\SynsetDataParseException;
 use AL\PhpWndb\Parsing\ParsedData\ParsedFrameDataInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedPointerDataInterface;
 use AL\PhpWndb\Parsing\ParsedData\ParsedSynsetDataInterface;
@@ -54,11 +55,12 @@ class SynsetDataParserTest extends BaseTestAbstract
 
 
 	/**
-	 * @expectedException \AL\PhpWndb\Parsing\Exceptions\SynsetDataParseException
 	 * @dataProvider dpTestParseSynsetDataInvalid
 	 */
 	public function testParseSynsetDataInvalid(string $synsetData): void
 	{
+		$this->expectException(SynsetDataParseException::class);
+
 		$parser = $this->createParser();
 		$parser->parseSynsetData($synsetData);
 	}

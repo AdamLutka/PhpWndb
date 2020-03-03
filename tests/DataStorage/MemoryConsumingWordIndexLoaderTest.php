@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace AL\PhpWndb\Tests\DataStorage;
 
+use AL\PhpWndb\Exceptions\InvalidStateException;
 use AL\PhpWndb\DataStorage\FileReaderInterface;
 use AL\PhpWndb\DataStorage\MemoryConsumingWordIndexLoader;
 use AL\PhpWndb\Tests\BaseTestAbstract;
@@ -38,11 +39,10 @@ class MemoryConsumingWordIndexLoaderTest extends BaseTestAbstract
 		static::assertNull($loader->findLemmaIndexData('not exist'));
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\InvalidStateException
-	 */
 	public function testFindLemmaIndexDataDuplicitLemma(): void
 	{
+		$this->expectException(InvalidStateException::class);
+
 		$loader = $this->createLoader([
 			'abysm n 1 2 @ + 1 0 09209256  ',
 			'abyss n 1 2 @ + 1 1 09209256  ',

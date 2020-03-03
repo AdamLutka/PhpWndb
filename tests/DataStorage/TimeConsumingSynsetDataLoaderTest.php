@@ -3,6 +3,7 @@ declare(strict_types = 1);
 
 namespace AL\PhpWndb\Tests\DataStorage;
 
+use AL\PhpWndb\Exceptions\UnknownSynsetOffsetException;
 use AL\PhpWndb\DataStorage\FileReaderInterface;
 use AL\PhpWndb\DataStorage\TimeConsumingSynsetDataLoader;
 use AL\PhpWndb\Tests\BaseTestAbstract;
@@ -36,11 +37,10 @@ class TimeConsumingSynsetDataLoaderTest extends BaseTestAbstract
 		);
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\UnknownSynsetOffsetException
-	 */
 	public function testGetSynsetDataUnknowSynsetOffset(): void
 	{
+		$this->expectException(UnknownSynsetOffsetException::class);
+
 		$loader = $this->createLoader('entity 0 003 ~ 00001930 n 0000 ~ 00002137 n 0000 ~ 04431553 n 0000 | that which is perceived or known or inferred to have its own distinct existence (living or nonliving)');
 		$loader->getSynsetData(1000);
 	}

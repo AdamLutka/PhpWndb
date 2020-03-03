@@ -9,6 +9,7 @@ use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Repositories\SynsetMultiRepository;
 use AL\PhpWndb\Repositories\SynsetRepositoryInterface;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use UnexpectedValueException;
 
 class SynsetMultiRepositoryTest extends BaseTestAbstract
 {
@@ -37,11 +38,10 @@ class SynsetMultiRepositoryTest extends BaseTestAbstract
 		static::assertNotNull($synset);
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\UnknownSynsetOffsetException
-	 */
 	public function testGetSynsetUnknown(): void
 	{
+		$this->expectException(UnknownSynsetOffsetException::class);
+
 		$repository = $this->createMultiRepository();
 		$repository->getSynset(-100);
 	}
@@ -59,12 +59,11 @@ class SynsetMultiRepositoryTest extends BaseTestAbstract
 		static::assertEnum($partOfSpeech, $synset->getPartOfSpeech());
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 * @expectedExceptionMessage Repository for ADVERB is not registered.
-	 */
 	public function testFindSynsetByPartOfSpeechUnknownPartOfSpeech(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+		$this->expectExceptionMessage('Repository for ADVERB is not registered.');
+
 		$repository = new SynsetMultiRepository();
 		$repository->findSynsetByPartOfSpeech(PartOfSpeechEnum::ADVERB(), 100);
 	}
@@ -89,21 +88,19 @@ class SynsetMultiRepositoryTest extends BaseTestAbstract
 		static::assertEnum($partOfSpeech, $synset->getPartOfSpeech());
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 * @expectedExceptionMessage Repository for ADVERB is not registered.
-	 */
 	public function testGetSynsetByPartOfSpeechUnknownPartOfSpeech(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+		$this->expectExceptionMessage('Repository for ADVERB is not registered.');
+
 		$repository = new SynsetMultiRepository();
 		$repository->getSynsetByPartOfSpeech(PartOfSpeechEnum::ADVERB(), 100);
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Exceptions\UnknownSynsetOffsetException
-	 */
 	public function testGetSynsetByPartOfSpeechUnknownSynset(): void
 	{
+		$this->expectException(UnknownSynsetOffsetException::class);
+
 		$repository = $this->createMultiRepository();
 		$repository->getSynsetByPartOfSpeech(PartOfSpeechEnum::VERB(), -100);
 	}

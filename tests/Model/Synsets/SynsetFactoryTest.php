@@ -10,6 +10,7 @@ use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
 use AL\PhpWndb\DataMapping\SynsetCategoryMapper;
 use AL\PhpWndb\PartOfSpeechEnum;
+use AL\PhpWndb\Model\Exceptions\SynsetCreateException;
 use AL\PhpWndb\Model\Relations\RelationPointerFactory;
 use AL\PhpWndb\Model\Relations\RelationPointerInterface;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
@@ -100,12 +101,11 @@ class SynsetFactoryTest extends BaseTestAbstract
 
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Model\Exceptions\SynsetCreateException
-	 * @expectedExceptionMessage There should not be any frames
-	 */
 	public function testAdverbWithFrames(): void
 	{
+		$this->expectException(SynsetCreateException::class);
+		$this->expectExceptionMessage('There should not be any frames');
+
 		$framesData = [
 			$this->createFrameData(23, 0),
 		];
@@ -115,12 +115,11 @@ class SynsetFactoryTest extends BaseTestAbstract
 		$factory->createSynsetFromParsedData($synsetData);
 	}
 
-	/**
-	 * @expectedException \AL\PhpWndb\Model\Exceptions\SynsetCreateException
-	 * @expectedExceptionMessage Index (0) has to be less than 0.
-	 */
 	public function testInvalidPointer(): void
 	{
+		$this->expectException(SynsetCreateException::class);
+		$this->expectExceptionMessage('Index (0) has to be less than 0.');
+
 		$pointersData = [
 			$this->createPointerData('@', 123, 'v', 1, 0),
 		];

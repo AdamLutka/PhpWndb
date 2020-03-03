@@ -7,6 +7,7 @@ use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Tests\BaseTestAbstract;
+use UnexpectedValueException;
 
 class RelationPointerTypeMapperTest extends BaseTestAbstract
 {
@@ -61,11 +62,10 @@ class RelationPointerTypeMapperTest extends BaseTestAbstract
 		];
 	}
 
-	/**
-	 * @expectedException \UnexpectedValueException
-	 */
 	public function testTokenToRelationPointerTypeUnknown(): void
 	{
+		$this->expectException(UnexpectedValueException::class);
+
 		$mapper = new RelationPointerTypeMapper();
 		$mapper->tokenToRelationPointerType('not_exist', PartOfSpeechEnum::NOUN());
 	}
