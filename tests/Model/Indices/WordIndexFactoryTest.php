@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace AL\PhpWndb\Tests\Model\Indexes;
+namespace AL\PhpWndb\Tests\Model\Indices;
 
 use AL\PhpWndb\Cache\CacheInterface;
 use AL\PhpWndb\DataMapping\LemmaMapper;
 use AL\PhpWndb\DataMapping\PartOfSpeechMapper;
 use AL\PhpWndb\DataMapping\RelationPointerTypeMapper;
-use AL\PhpWndb\Model\Indexes\WordIndexFactory;
+use AL\PhpWndb\Model\Indices\WordIndexFactory;
 use AL\PhpWndb\Model\Relations\RelationPointerTypeEnum;
 use AL\PhpWndb\Parsing\ParsedData\ParsedWordIndexInterface;
 use AL\PhpWndb\PartOfSpeechEnum;

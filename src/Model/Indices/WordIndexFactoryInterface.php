@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace AL\PhpWndb\Model\Indexes;
+namespace AL\PhpWndb\Model\Indices;
 
 use AL\PhpWndb\Parsing\ParsedData\ParsedWordIndexInterface;
 

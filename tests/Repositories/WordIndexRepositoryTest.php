@@ -5,8 +5,8 @@ namespace AL\PhpWndb\Tests\Repositories;
 
 use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\DataStorage\WordIndexLoaderInterface;
-use AL\PhpWndb\Model\Indexes\WordIndexFactoryInterface;
-use AL\PhpWndb\Model\Indexes\WordIndexInterface;
+use AL\PhpWndb\Model\Indices\WordIndexFactoryInterface;
+use AL\PhpWndb\Model\Indices\WordIndexInterface;
 use AL\PhpWndb\Parsing\WordIndexParserInterface;
 use AL\PhpWndb\Repositories\WordIndexRepository;
 use AL\PhpWndb\Tests\BaseTestAbstract;

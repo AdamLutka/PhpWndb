@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Tests\Repositories;
 
-use AL\PhpWndb\Model\Indexes\WordIndexInterface;
+use AL\PhpWndb\Model\Indices\WordIndexInterface;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Repositories\WordIndexMultiRepository;
 use AL\PhpWndb\Repositories\WordIndexRepositoryInterface;

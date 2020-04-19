@@ -5,8 +5,8 @@ namespace AL\PhpWndb\Repositories;
 
 use AL\PhpWndb\DataMapping\LemmaMapperInterface;
 use AL\PhpWndb\DataStorage\WordIndexLoaderInterface;
-use AL\PhpWndb\Model\Indexes\WordIndexFactoryInterface;
-use AL\PhpWndb\Model\Indexes\WordIndexInterface;
+use AL\PhpWndb\Model\Indices\WordIndexFactoryInterface;
+use AL\PhpWndb\Model\Indices\WordIndexInterface;
 use AL\PhpWndb\Parsing\WordIndexParserInterface;
 
 class WordIndexRepository implements WordIndexRepositoryInterface
@@ -24,7 +24,7 @@ class WordIndexRepository implements WordIndexRepositoryInterface
 	protected $wordIndexFactory;
 
 	/** @var (WordIndexInterface|null)[] */
-	protected $wordIndexes = [];
+	protected $wordIndices = [];
 
 
 	public function __construct(
@@ -47,17 +47,17 @@ class WordIndexRepository implements WordIndexRepositoryInterface
 		}
 
 		$lemmaToken = $this->getLemmaToken($lemma);
-		if (!array_key_exists($lemmaToken, $this->wordIndexes)) {
-			$this->wordIndexes[$lemmaToken] = $this->doFindWordIndex($lemmaToken);
+		if (!array_key_exists($lemmaToken, $this->wordIndices)) {
+			$this->wordIndices[$lemmaToken] = $this->doFindWordIndex($lemmaToken);
 		}
 
-		return $this->wordIndexes[$lemmaToken];
+		return $this->wordIndices[$lemmaToken];
 	}
 
 	public function dispose(WordIndexInterface $wordIndex): void
 	{
 		$lemmaToken = $this->getLemmaToken($wordIndex->getLemma());
-		unset($this->wordIndexes[$lemmaToken]);
+		unset($this->wordIndices[$lemmaToken]);
 	}
 
 
