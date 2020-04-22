@@ -8,6 +8,7 @@ use AL\PhpWndb\Model\Synsets\Adverbs\SynsetAdverbsInterface;
 use AL\PhpWndb\Model\Synsets\Nouns\SynsetNounsInterface;
 use AL\PhpWndb\Model\Synsets\Verbs\SynsetVerbsInterface;
 use AL\PhpWndb\Model\Synsets\SynsetInterface;
+use AL\PhpWndb\Model\Indices\Collections\WordIndexCollectionInterface;
 use AL\PhpWndb\PartOfSpeechEnum;
 use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
 
@@ -16,62 +17,45 @@ class SynsetCollection implements SynsetCollectionInterface
 	/** @var SynsetMultiRepositoryInterface */
 	protected $synsetMultiRepository;
 
-	/** @var int[] */
-	protected $synsetAdjectiveOffsets;
-
-	/** @var int[] */
-	protected $synsetAdverbOffsets;
-
-	/** @var int[] */
-	protected $synsetNounOffsets;
-
-	/** @var int[] */
-	protected $synsetVerbOffsets;
+	/** @var WordIndexCollectionInterface */
+	protected $wordIndexCollection;
 
 
-	/**
-	 * @param int[] $synsetAdjectiveOffsets
-	 * @param int[] $synsetAdverbOffsets
-	 * @param int[] $synsetNounOffsets
-	 * @param int[] $synsetVerbOffsets
-	 */
 	public function __construct(
 		SynsetMultiRepositoryInterface $synsetMultiRepository,
-		array $synsetAdjectiveOffsets,
-		array $synsetAdverbOffsets,
-		array $synsetNounOffsets,
-		array $synsetVerbOffsets
+		WordIndexCollectionInterface $wordIndexCollection
 	) {
 		$this->synsetMultiRepository = $synsetMultiRepository;
-		$this->synsetAdjectiveOffsets = $synsetAdjectiveOffsets;
-		$this->synsetAdverbOffsets = $synsetAdverbOffsets;
-		$this->synsetNounOffsets = $synsetNounOffsets;
-		$this->synsetVerbOffsets = $synsetVerbOffsets;
+		$this->wordIndexCollection = $wordIndexCollection;
 	}
 
 
 	public function getSynsetAdjectives(): array
 	{
+		$offsets = ($wordIndex = $this->wordIndexCollection->getAdjectiveWordIndex()) ? $wordIndex->getSynsetOffsets() : [];
 		/** @var SynsetAdjectivesInterface[] */
-		return $this->offsetsToSynsets(PartOfSpeechEnum::ADJECTIVE(), $this->synsetAdjectiveOffsets);
+		return $this->offsetsToSynsets(PartOfSpeechEnum::ADJECTIVE(), $offsets);
 	}
 
 	public function getSynsetAdverbs(): array
 	{
+		$offsets = ($wordIndex = $this->wordIndexCollection->getAdverbWordIndex()) ? $wordIndex->getSynsetOffsets() : [];
 		/** @var SynsetAdverbsInterface[] */
-		return $this->offsetsToSynsets(PartOfSpeechEnum::ADVERB(), $this->synsetAdverbOffsets);
+		return $this->offsetsToSynsets(PartOfSpeechEnum::ADVERB(), $offsets);
 	}
 
 	public function getSynsetNouns(): array
 	{
+		$offsets = ($wordIndex = $this->wordIndexCollection->getNounWordIndex()) ? $wordIndex->getSynsetOffsets() : [];
 		/** @var SynsetNounsInterface[] */
-		return $this->offsetsToSynsets(PartOfSpeechEnum::NOUN(), $this->synsetNounOffsets);
+		return $this->offsetsToSynsets(PartOfSpeechEnum::NOUN(), $offsets);
 	}
 
 	public function getSynsetVerbs(): array
 	{
+		$offsets = ($wordIndex = $this->wordIndexCollection->getVerbWordIndex()) ? $wordIndex->getSynsetOffsets() : [];
 		/** @var SynsetVerbsInterface[] */
-		return $this->offsetsToSynsets(PartOfSpeechEnum::VERB(), $this->synsetVerbOffsets);
+		return $this->offsetsToSynsets(PartOfSpeechEnum::VERB(), $offsets);
 	}
 
 

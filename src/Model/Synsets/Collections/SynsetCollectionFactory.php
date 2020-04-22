@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace AL\PhpWndb\Model\Synsets\Collections;
 
+use AL\PhpWndb\Model\Indices\Collections\WordIndexCollectionInterface;
 use AL\PhpWndb\Repositories\SynsetMultiRepositoryInterface;
 
 class SynsetCollectionFactory implements SynsetCollectionFactoryInterface
@@ -17,18 +18,7 @@ class SynsetCollectionFactory implements SynsetCollectionFactoryInterface
 	}
 
 
-	public function createSynsetCollection(
-		array $synsetAdjectiveOffsets,
-		array $synsetAdverbOffsets,
-		array $synsetNounOffsets,
-		array $synsetVerbOffsets
-	): SynsetCollectionInterface {
-		return new SynsetCollection(
-			$this->synsetMultiRepository,
-			$synsetAdjectiveOffsets,
-			$synsetAdverbOffsets,
-			$synsetNounOffsets,
-			$synsetVerbOffsets
-		);
+	public function createSynsetCollection(WordIndexCollectionInterface $wordIndexCollection): SynsetCollectionInterface {
+		return new SynsetCollection($this->synsetMultiRepository, $wordIndexCollection);
 	}
 }

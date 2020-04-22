@@ -17,6 +17,8 @@ use AL\PhpWndb\DataStorage\FileBinarySearcher;
 use AL\PhpWndb\DataStorage\FileReader;
 use AL\PhpWndb\DataStorage\TimeConsumingSynsetDataLoader;
 use AL\PhpWndb\DataStorage\TimeConsumingWordIndexLoader;
+use AL\PhpWndb\Model\Indices\Collections\WordIndexCollectionFactory;
+use AL\PhpWndb\Model\Indices\Collections\WordIndexCollectionFactoryInterface;
 use AL\PhpWndb\Model\Indices\WordIndexFactory;
 use AL\PhpWndb\Model\Indices\WordIndexFactoryInterface;
 use AL\PhpWndb\Model\Relations\RelationPointerFactory;
@@ -205,6 +207,7 @@ class DiContainerFactory
 
 			// ...
 			SynsetCollectionFactoryInterface::class => autowire(SynsetCollectionFactory::class),
+			WordIndexCollectionFactoryInterface::class => autowire(WordIndexCollectionFactory::class),
 			SynsetDataParserInterface::class => create(SynsetDataParser::class),
 			RelationsFactoryInterface::class => create(RelationsFactory::class),
 			RelationPointerFactoryInterface::class => create(RelationPointerFactory::class),
