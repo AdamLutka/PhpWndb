@@ -29,6 +29,7 @@ class FileBinarySearcherTest extends BaseTestAbstract
 			['1-dodecanol', '1-dodecanol n 1 1 @ 1 0 14954808  '],
 			['attlee',      'attlee n 1 1 @ 1 0 10847477  '],
 			['arda',        'arda n 1 2 @ #p 1 0 08357680  '],
+			['am',          'am n 3 1 @ 3 0 14652672 06713764 06292247  '],
 			['aaaa',        null],
 			['xxx',         null],
 		];

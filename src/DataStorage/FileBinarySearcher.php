@@ -44,7 +44,7 @@ class FileBinarySearcher implements FileBinarySearcherInterface
 			$endOffset = $nextEndOffset;
 			$block = $this->readCenterBlock($startOffset, $endOffset);
 
-			if ($block->isPredecessor($recordPrefix)) {
+			if ($block->isPredecessor($recordPrefix, $this->recordPrefixSeparator)) {
 				$nextEndOffset = $block->getStartOffset();
 			}
 			else {
@@ -134,8 +134,8 @@ class Block
 		return $endIndex === false ? substr($this->content, $startIndex) : substr($this->content, $startIndex, $endIndex - $startIndex);
 	}
 
-	public function isPredecessor(string $recordPrefix): bool
+	public function isPredecessor(string $recordPrefix, string $recordPrefixSeparator): bool
 	{
-		return strncmp($recordPrefix, $this->content, strlen($recordPrefix)) < 0;
+		return strncmp($recordPrefix . $recordPrefixSeparator, $this->content, strlen($recordPrefix) + strlen($recordPrefixSeparator)) < 0;
 	}
 }
