@@ -1,0 +1,31 @@
+parameters:
+    databaseDir: '%rootDir%/wordnet-db/'
+
+services:
+    _defaults:
+        autowire: true
+        bind:
+            AL\PhpWndb\Storage\Storage: '@AL\PhpWndb\Storage\FileStorage'
+            AL\PhpWndb\Storage\StreamSearcher: '@AL\PhpWndb\Storage\StreamBinarySearcher'
+
+    search:
+        namespace: 'AL\PhpWndb\'
+        resource: '../src/**/*{Factory,Mapper,Parser,Repository,SearchEngine}.php'
+
+
+    AL\PhpWndb\Storage\FileStorage:
+        arguments:
+            $filesDir: '%databaseDir%'
+
+    AL\PhpWndb\Repository\Index\IndexRepository:
+        arguments:
+            $sourceSyntacticCategories:
+                - !php/enum AL\PhpWndb\Model\Index\SyntacticCategory::NOUN
+                - !php/enum AL\PhpWndb\Model\Index\SyntacticCategory::VERB
+                - !php/enum AL\PhpWndb\Model\Index\SyntacticCategory::ADJECTIVE
+                - !php/enum AL\PhpWndb\Model\Index\SyntacticCategory::ADVERB
+
+    AL\PhpWndb\Storage\StreamBinarySearcher: ~
+
+    AL\PhpWndb\WordNet:
+        public: true

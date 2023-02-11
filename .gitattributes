@@ -1,5 +1,6 @@
 examples export-ignore
 tests export-ignore
+utils export-ignore
 .* export-ignore
 README.md export-ignore
 phpunit.xml export-ignore
