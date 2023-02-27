@@ -5,6 +5,7 @@
 	"keywords": ["wordnet", "synset"],
 	"license": "MIT",
 	"minimum-stability": "stable",
+	"abandoned": "phpwndb/phpwndb",
 	"authors": [
 		{
 			"name": "Adam Lutka",
